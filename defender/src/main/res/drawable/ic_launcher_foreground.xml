@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- W letter for WcDonald's -->
+    <path
+        android:fillColor="#FFC72C"
+        android:pathData="M30,36l8,36l8,-24l8,24l8,-36h8l-16,48h-4l-8,-24l-8,24h-4L26,36z" />
+</vector>
