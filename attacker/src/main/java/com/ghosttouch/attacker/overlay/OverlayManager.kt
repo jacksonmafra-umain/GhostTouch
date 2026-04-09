@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
 import androidx.compose.runtime.Composable
@@ -20,25 +21,18 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 /**
  * Manages the lifecycle of overlay views drawn on top of other apps.
  *
- * ## How overlays work on Android
- * [WindowManager.addView] can add views to the system window layer using
- * [WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY]. This draws the view
- * on top of ALL other apps, regardless of which app is in the foreground.
- *
- * ## Key flags
- * - **TYPE_APPLICATION_OVERLAY**: Required overlay type on API 26+
- * - **FLAG_NOT_TOUCH_MODAL**: Allows touches outside the overlay to pass through
- *   to the app underneath (but captures touches ON the overlay)
- * - **FLAG_LAYOUT_IN_SCREEN**: Positions the overlay using screen coordinates
- *
- * ## ComposeView in Service context
- * Since overlays are created from a Service (not an Activity), we need to
- * manually provide lifecycle and saved-state owners for Compose to function.
- * This is done via [OverlayLifecycleOwner] which implements both interfaces.
+ * ## Race condition prevention
+ * A pending flag [isPending] is set immediately when [show] is called, preventing
+ * the polling loop from queueing duplicate overlays during the delay window.
+ * The pending delayed runnable is tracked and can be cancelled via [cancelPending].
  *
  * @param context Application context (must be app context for WindowManager).
  */
 class OverlayManager(private val context: Context) {
+
+    companion object {
+        private const val TAG = "OverlayManager"
+    }
 
     private val windowManager: WindowManager =
         context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -47,14 +41,30 @@ class OverlayManager(private val context: Context) {
     private var lifecycleOwner: OverlayLifecycleOwner? = null
     private val handler = Handler(Looper.getMainLooper())
 
-    /** Whether an overlay is currently being displayed. */
-    val isShowing: Boolean get() = currentOverlay != null
+    /** Tracks the pending delayed show runnable so it can be cancelled. */
+    private var pendingShowRunnable: Runnable? = null
+
+    /** Set to true as soon as show() is called, before the delay. */
+    @Volatile
+    private var isPending = false
+
+    /**
+     * Whether an overlay is currently displayed OR pending display.
+     * This prevents the polling loop from triggering duplicate show() calls
+     * during the delay window.
+     */
+    val isShowing: Boolean get() = currentOverlay != null || isPending
+
+    /**
+     * Whether the overlay is actually visible on screen (not just pending).
+     */
+    val isVisible: Boolean get() = currentOverlay != null
 
     /**
      * Shows a fullscreen overlay with the given Compose content.
      *
-     * The overlay is displayed on top of all other apps with a configurable
-     * delay to simulate realistic attack timing.
+     * Sets [isPending] immediately to prevent race conditions with the polling loop.
+     * The actual view is added after [delayMs] milliseconds.
      *
      * @param delayMs Delay before showing the overlay (300-500ms is realistic).
      * @param content The Compose content to render in the overlay.
@@ -62,9 +72,24 @@ class OverlayManager(private val context: Context) {
     fun show(delayMs: Long = 400, content: @Composable () -> Unit) {
         if (isShowing) return
 
-        handler.postDelayed({
-            showImmediate(content)
-        }, delayMs)
+        // Set pending flag IMMEDIATELY — this prevents polling re-triggers
+        isPending = true
+        Log.d(TAG, "Overlay show() called — pending=true, will display in ${delayMs}ms")
+
+        val runnable = Runnable { showImmediate(content) }
+        pendingShowRunnable = runnable
+        handler.postDelayed(runnable, delayMs)
+    }
+
+    /**
+     * Cancels a pending overlay that hasn't been displayed yet.
+     * No-op if the overlay is already visible.
+     */
+    fun cancelPending() {
+        pendingShowRunnable?.let { handler.removeCallbacks(it) }
+        pendingShowRunnable = null
+        isPending = false
+        Log.d(TAG, "Pending overlay cancelled")
     }
 
     /**
@@ -72,7 +97,12 @@ class OverlayManager(private val context: Context) {
      * Must be called on the main thread.
      */
     private fun showImmediate(content: @Composable () -> Unit) {
-        if (isShowing) return
+        pendingShowRunnable = null
+
+        if (currentOverlay != null) {
+            isPending = false
+            return
+        }
 
         // Create lifecycle owner for Compose in service context
         val owner = OverlayLifecycleOwner()
@@ -89,8 +119,6 @@ class OverlayManager(private val context: Context) {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            // FLAG_NOT_TOUCH_MODAL: touches on overlay are captured,
-            // touches outside pass through to underlying app
             WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
             PixelFormat.TRANSLUCENT
@@ -101,27 +129,27 @@ class OverlayManager(private val context: Context) {
         try {
             windowManager.addView(composeView, params)
             currentOverlay = composeView
+            isPending = false
             owner.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
             owner.handleLifecycleEvent(Lifecycle.Event.ON_START)
             owner.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+            Log.d(TAG, "Overlay displayed successfully")
         } catch (e: Exception) {
-            // Overlay permission may have been revoked
+            Log.e(TAG, "Failed to show overlay: ${e.message}")
             currentOverlay = null
             lifecycleOwner = null
+            isPending = false
         }
     }
 
     /**
-     * Shows a transparent/tapjacking overlay for capturing unintended taps.
-     *
-     * Uses FLAG_NOT_FOCUSABLE so the overlay doesn't capture input focus,
-     * allowing all touches to pass through to the app underneath. The overlay
-     * is invisible but can still intercept touch events for logging.
-     *
-     * @param content The Compose content (typically transparent with hidden buttons).
+     * Shows a transparent/tapjacking overlay.
+     * Uses FLAG_NOT_FOCUSABLE so touches pass through.
      */
     fun showTapjacking(content: @Composable () -> Unit) {
         if (isShowing) return
+
+        isPending = true
 
         val owner = OverlayLifecycleOwner()
         lifecycleOwner = owner
@@ -136,8 +164,6 @@ class OverlayManager(private val context: Context) {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            // FLAG_NOT_FOCUSABLE: overlay doesn't take input focus
-            // FLAG_NOT_TOUCH_MODAL: touches pass through
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
@@ -149,25 +175,32 @@ class OverlayManager(private val context: Context) {
         try {
             windowManager.addView(composeView, params)
             currentOverlay = composeView
+            isPending = false
             owner.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
             owner.handleLifecycleEvent(Lifecycle.Event.ON_START)
             owner.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
         } catch (_: Exception) {
             currentOverlay = null
             lifecycleOwner = null
+            isPending = false
         }
     }
 
     /**
      * Removes the currently displayed overlay from the screen.
+     * Also cancels any pending show that hasn't fired yet.
      */
     fun hide() {
+        // Cancel any pending show first
+        cancelPending()
+
         currentOverlay?.let { view ->
             try {
                 lifecycleOwner?.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
                 lifecycleOwner?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
                 lifecycleOwner?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                 windowManager.removeView(view)
+                Log.d(TAG, "Overlay hidden")
             } catch (_: Exception) {
                 // View may have already been removed
             }
@@ -179,10 +212,6 @@ class OverlayManager(private val context: Context) {
 
 /**
  * Custom lifecycle owner for Compose views running in a Service context.
- *
- * Activities and Fragments provide lifecycle and saved-state owners automatically,
- * but Services do not. This class provides both so that Compose can function
- * properly when rendered inside an overlay from a foreground service.
  */
 internal class OverlayLifecycleOwner : LifecycleOwner, SavedStateRegistryOwner {
 

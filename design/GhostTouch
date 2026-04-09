@@ -3,15 +3,2208 @@
   "children": [
     {
       "type": "frame",
-      "id": "bi8Au",
-      "x": 0,
+      "id": "vHd94",
+      "x": 900,
       "y": 0,
-      "name": "Frame",
-      "clip": true,
-      "width": 800,
-      "height": 600,
-      "fill": "#FFFFFF",
-      "layout": "none"
+      "name": "Slide 01 - Title",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 24,
+      "padding": 120,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "TxDDj",
+          "fill": "$cyan",
+          "content": "GHOSTTOUCH",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 12
+        },
+        {
+          "type": "text",
+          "id": "UaW8F",
+          "fill": "$text-primary",
+          "textGrowth": "fixed-width",
+          "width": 1400,
+          "content": "Android Overlay Attack:",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 56,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "fDuxd",
+          "fill": "$cyan",
+          "textGrowth": "fixed-width",
+          "width": 1400,
+          "content": "Real Risk, Real Defense",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 56,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "jP5QW",
+          "width": 120,
+          "height": 4,
+          "fill": "$cyan",
+          "cornerRadius": 2
+        },
+        {
+          "type": "text",
+          "id": "ytVZN",
+          "fill": "$text-secondary",
+          "content": "Security Awareness Demo  ·  Educational POC",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 22
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "1BD7x",
+      "x": 3020,
+      "y": 0,
+      "name": "Slide 02 - Problem",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "B8t3c",
+          "fill": "$danger-red",
+          "content": "THE PROBLEM",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "bFNcG",
+          "fill": "$text-primary",
+          "content": "Android's Trust Gap",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "vGhVB",
+          "name": "items",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 28,
+          "children": [
+            {
+              "type": "frame",
+              "id": "6IqhA",
+              "name": "b1",
+              "gap": 20,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "59Qot",
+                  "width": 48,
+                  "height": 48,
+                  "fill": "$cyan",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center"
+                },
+                {
+                  "type": "text",
+                  "id": "PLhOT",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 1400,
+                  "content": "Android allows apps to draw overlays\nover any other application",
+                  "lineHeight": 1.3,
+                  "fontFamily": "Inter",
+                  "fontSize": 28
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "dfwGj",
+              "name": "b2",
+              "gap": 20,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "vPx2J",
+                  "width": 48,
+                  "height": 48,
+                  "fill": "$warn-amber",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center"
+                },
+                {
+                  "type": "text",
+                  "id": "IKZ9H",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 1400,
+                  "content": "Users cannot easily distinguish\nreal UI from fake UI",
+                  "lineHeight": 1.3,
+                  "fontFamily": "Inter",
+                  "fontSize": 28
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "qtuUU",
+              "name": "b3",
+              "gap": 20,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "uxa3S",
+                  "width": 48,
+                  "height": 48,
+                  "fill": "$danger-red",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center"
+                },
+                {
+                  "type": "text",
+                  "id": "P6623",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 1400,
+                  "content": "Sensitive flows like login and payment\nare vulnerable to interception",
+                  "lineHeight": 1.3,
+                  "fontFamily": "Inter",
+                  "fontSize": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "6h9X0",
+      "x": 5140,
+      "y": 0,
+      "name": "Slide 03 - Attack Concept",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "NN7Pa",
+          "fill": "$cyan",
+          "content": "ATTACK FLOW",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "NGHyC",
+          "fill": "$text-primary",
+          "content": "How It Works",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "zFS10",
+          "name": "steps",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "yizrh",
+              "name": "c1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "rN6g5",
+                  "fill": "$cyan",
+                  "content": "01",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 48,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "WVaB2",
+                  "fill": "$text-primary",
+                  "content": "Background",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "VoGvx",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Malicious app runs as a foreground service, disguised as a game",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "poJ9P",
+              "name": "c2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Vq4U8",
+                  "fill": "$warn-amber",
+                  "content": "02",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 48,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "eo15Y",
+                  "fill": "$text-primary",
+                  "content": "Detect",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "UwwDS",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Polls UsageStatsManager to detect when target app is in foreground",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "0n97v",
+              "name": "c3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qmuSM",
+                  "fill": "$danger-red",
+                  "content": "03",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 48,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "8tIeE",
+                  "fill": "$text-primary",
+                  "content": "Overlay",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "RINwM",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Displays pixel-perfect fake UI on top of the real app",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iHOKv",
+              "name": "c4",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "iIr7W",
+                  "fill": "#FF6B6B",
+                  "content": "04",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 48,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "aNzF4",
+                  "fill": "$text-primary",
+                  "content": "Capture",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "cry2U",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "User input goes to fake fields — credentials exfiltrated",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "8TYqj",
+      "x": 7260,
+      "y": 0,
+      "name": "Slide 04 - Key Insight",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": 120,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "uiSMv",
+          "fill": "$warn-amber",
+          "content": "KEY INSIGHT",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "frame",
+          "id": "TWcc5",
+          "width": 80,
+          "height": 4,
+          "fill": "$warn-amber",
+          "cornerRadius": 2
+        },
+        {
+          "type": "text",
+          "id": "FRdfP",
+          "fill": "$text-primary",
+          "content": "No sandbox break required",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 44,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "4dYbl",
+          "fill": "$text-primary",
+          "content": "No system exploit required",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 44,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "FDfQW",
+          "fill": "$cyan",
+          "content": "Just UI deception",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "uMJ47",
+          "width": 80,
+          "height": 4,
+          "fill": "$cyan",
+          "cornerRadius": 2
+        },
+        {
+          "type": "text",
+          "id": "P71mL",
+          "fill": "$text-secondary",
+          "textGrowth": "fixed-width",
+          "width": 900,
+          "content": "The attack exploits user trust, not system vulnerabilities.",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 24
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ZaYjS",
+      "x": 900,
+      "y": 1280,
+      "name": "Slide 05 - Live Demo Attack",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "4cgmg",
+          "fill": "$danger-red",
+          "content": "LIVE DEMO",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "LlZNj",
+          "fill": "$text-primary",
+          "content": "Attack in Action",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "18IV2",
+          "name": "demoSteps",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "wndbj",
+              "name": "d1",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 20,
+              "padding": [
+                20,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qokjZ",
+                  "fill": "$cyan",
+                  "content": "1",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "JXzBR",
+                  "fill": "$text-primary",
+                  "content": "Open GhostTouch app — play the tap game",
+                  "fontFamily": "Inter",
+                  "fontSize": 26
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "BaK0B",
+              "name": "d2",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 20,
+              "padding": [
+                20,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "gFpw0",
+                  "fill": "$cyan",
+                  "content": "2",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "7iv4E",
+                  "fill": "$text-primary",
+                  "content": "Grant overlay + usage stats permissions",
+                  "fontFamily": "Inter",
+                  "fontSize": 26
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "k0LlX",
+              "name": "d3",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 20,
+              "padding": [
+                20,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "hTjHL",
+                  "fill": "$cyan",
+                  "content": "3",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "CZCw0",
+                  "fill": "$text-primary",
+                  "content": "Start overlay service, switch to WcDonald's",
+                  "fontFamily": "Inter",
+                  "fontSize": 26
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "orDUe",
+              "name": "d4",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 20,
+              "padding": [
+                20,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "PTqzr",
+                  "fill": "$warn-amber",
+                  "content": "4",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "FgOoV",
+                  "fill": "$warn-amber",
+                  "content": "Fake login overlay appears — enter credentials",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "O30wO",
+              "name": "d5",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 20,
+              "padding": [
+                20,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "tF21q",
+                  "fill": "$danger-red",
+                  "content": "5",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "xu6eY",
+                  "fill": "$danger-red",
+                  "content": "Return to GhostTouch — view captured session",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "AqyBY",
+      "x": 3020,
+      "y": 1280,
+      "name": "Slide 06 - Impact",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "GRVeR",
+          "fill": "$danger-red",
+          "content": "IMPACT",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "y7SZ0",
+          "fill": "$text-primary",
+          "content": "What's at Stake",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "sWiDk",
+          "name": "grid",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "cXf4h",
+              "name": "g1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "FSMrp",
+                  "width": 48,
+                  "height": 48,
+                  "iconFontName": "key",
+                  "iconFontFamily": "lucide",
+                  "fill": "$danger-red"
+                },
+                {
+                  "type": "text",
+                  "id": "VijEH",
+                  "fill": "$text-primary",
+                  "content": "Credential Theft",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "4vaX4",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Emails, passwords, usernames stolen in real-time",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "KC2R9",
+              "name": "g2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "CYG61",
+                  "width": 48,
+                  "height": 48,
+                  "iconFontName": "credit-card",
+                  "iconFontFamily": "lucide",
+                  "fill": "$warn-amber"
+                },
+                {
+                  "type": "text",
+                  "id": "RpbeI",
+                  "fill": "$text-primary",
+                  "content": "Payment Fraud",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "JItLQ",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Card numbers, CVVs, expiry dates captured",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "lrTEc",
+              "name": "g3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "cCJfZ",
+                  "width": 48,
+                  "height": 48,
+                  "iconFontName": "shield-off",
+                  "iconFontFamily": "lucide",
+                  "fill": "$cyan"
+                },
+                {
+                  "type": "text",
+                  "id": "kdgiR",
+                  "fill": "$text-primary",
+                  "content": "Session Hijacking",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "FekqH",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Auth tokens and sessions intercepted",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "RewfA",
+              "name": "g4",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "6eAxX",
+                  "width": 48,
+                  "height": 48,
+                  "iconFontName": "building",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-muted"
+                },
+                {
+                  "type": "text",
+                  "id": "zINkP",
+                  "fill": "$text-primary",
+                  "content": "Brand Damage",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "FSGcm",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Users blame your app, not the attacker",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "EWdW8",
+      "x": 5140,
+      "y": 1280,
+      "name": "Slide 07 - Why It Works",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        160
+      ],
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "74Xqr",
+          "fill": "$cyan",
+          "content": "WHY IT WORKS",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "q3ERC",
+          "fill": "$text-primary",
+          "content": "The Root Causes",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "6xj0O",
+          "name": "reasons",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "Gdi7y",
+              "name": "r1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "gap": 24,
+              "padding": [
+                28,
+                32
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xbS0h",
+                  "fill": "$cyan",
+                  "content": "01",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 32,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "ATn4K",
+                  "fill": "$text-primary",
+                  "content": "Users inherently trust what they see on screen",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "vzZ6J",
+              "name": "r2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "gap": 24,
+              "padding": [
+                28,
+                32
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "llEBB",
+                  "fill": "$warn-amber",
+                  "content": "02",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 32,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "bGn9A",
+                  "fill": "$text-primary",
+                  "content": "The OS does not enforce visual authenticity",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "LEt3S",
+              "name": "r3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "gap": 24,
+              "padding": [
+                28,
+                32
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "7zscX",
+                  "fill": "$danger-red",
+                  "content": "03",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 32,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "HymPX",
+                  "fill": "$text-primary",
+                  "content": "Overlay permission alone is enough to attack",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Pgo89",
+      "x": 7260,
+      "y": 1280,
+      "name": "Slide 08 - Defense Strategy",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "oi7NS",
+          "fill": "$cyan",
+          "content": "DEFENSE",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "UzIk0",
+          "fill": "$text-primary",
+          "content": "Defense Strategy",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "LOar7",
+          "name": "defGrid",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "mOz6b",
+              "name": "df1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 28,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "918O0",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$cyan",
+                  "cornerRadius": 20,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center"
+                },
+                {
+                  "type": "text",
+                  "id": "iaZqx",
+                  "fill": "$text-primary",
+                  "content": "Block Obscured Touches",
+                  "fontFamily": "Inter",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "pN4OE",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "filterTouchesWhenObscured rejects input when any overlay is present",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "5uMkz",
+              "name": "df2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 28,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "kyF8T",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$warn-amber",
+                  "cornerRadius": 20,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center"
+                },
+                {
+                  "type": "text",
+                  "id": "k5WSk",
+                  "fill": "$text-primary",
+                  "content": "Detect Overlays",
+                  "fontFamily": "Inter",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "uMMaa",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Scan installed apps for SYSTEM_ALERT_WINDOW permission and warn users",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "9vzbA",
+              "name": "df3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 28,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CqDCF",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$danger-red",
+                  "cornerRadius": 20,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center"
+                },
+                {
+                  "type": "text",
+                  "id": "4hwm6",
+                  "fill": "$text-primary",
+                  "content": "Harden Screens",
+                  "fontFamily": "Inter",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "Wh8Ux",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "FLAG_SECURE prevents screenshots and screen recording of sensitive views",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "k9da6",
+              "name": "df4",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 28,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "loxhi",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$text-muted",
+                  "cornerRadius": 20,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center"
+                },
+                {
+                  "type": "text",
+                  "id": "n4OaO",
+                  "fill": "$text-primary",
+                  "content": "Verify Identity",
+                  "fontFamily": "Inter",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "g1Cjw",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Biometric prompts render above overlays — impossible to cover",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "KG8Pu",
+      "x": 900,
+      "y": 2560,
+      "name": "Slide 09 - Key Defense",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": [
+        100,
+        160
+      ],
+      "justifyContent": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "AZ0lu",
+          "fill": "$cyan",
+          "content": "CRITICAL DEFENSE",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "LsHLn",
+          "fill": "$cyan",
+          "content": "filterTouchesWhenObscured",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 44,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "TNafP",
+          "name": "codeBlock",
+          "width": "fill_container",
+          "fill": "$terminal-black",
+          "cornerRadius": 12,
+          "layout": "vertical",
+          "gap": 4,
+          "padding": 32,
+          "children": [
+            {
+              "type": "text",
+              "id": "zfFAg",
+              "fill": "$text-muted",
+              "content": "// XML attribute",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 20,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "L94Nm",
+              "fill": "$cyan",
+              "content": "android:filterTouchesWhenObscured=\"true\"",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "8ye6s",
+              "fill": "$text-muted",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "N6kw3",
+              "fill": "$text-muted",
+              "content": "// Or programmatic (Compose)",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 20,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "NEdjY",
+              "fill": "$text-primary",
+              "content": "Modifier.pointerInteropFilter { event ->",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "B9gkk",
+              "fill": "$warn-amber",
+              "content": "    (event.flags and FLAG_WINDOW_IS_OBSCURED) != 0",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "aM1YB",
+              "fill": "$text-primary",
+              "content": "}",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "GJIvM",
+          "name": "props",
+          "width": "fill_container",
+          "gap": 32,
+          "children": [
+            {
+              "type": "frame",
+              "id": "1ex7m",
+              "name": "p1",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "k4HRs",
+                  "fill": "$cyan",
+                  "content": "Simple",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "3nbAU",
+                  "fill": "$text-secondary",
+                  "content": "One line of XML",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "hArrZ",
+              "name": "p2",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "p1LVI",
+                  "fill": "$cyan",
+                  "content": "Effective",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "NL6WC",
+                  "fill": "$text-secondary",
+                  "content": "Catches all overlay types",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZC9YL",
+              "name": "p3",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Ns2Fl",
+                  "fill": "$danger-red",
+                  "content": "Often Ignored",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "wmyzj",
+                  "fill": "$text-secondary",
+                  "content": "Most apps don't use it",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "pwqhH",
+      "x": 3020,
+      "y": 2560,
+      "name": "Slide 10 - Defense Demo",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        160
+      ],
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "EAyc5",
+          "fill": "$cyan",
+          "content": "LIVE DEMO",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "4Nmgn",
+          "fill": "$cyan",
+          "content": "Defense ON",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 56,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "V5EUI",
+          "name": "results",
+          "width": 900,
+          "layout": "vertical",
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "KnjOq",
+              "name": "res1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 16,
+              "padding": [
+                24,
+                28
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "2CjAr",
+                  "width": 32,
+                  "height": 32,
+                  "iconFontName": "shield-check",
+                  "iconFontFamily": "lucide",
+                  "fill": "$cyan"
+                },
+                {
+                  "type": "text",
+                  "id": "xHMae",
+                  "fill": "$text-primary",
+                  "content": "Attack fails — input blocked by touch filter",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "HnS2p",
+              "name": "res2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 16,
+              "padding": [
+                24,
+                28
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "Ppg1r",
+                  "width": 32,
+                  "height": 32,
+                  "iconFontName": "shield-check",
+                  "iconFontFamily": "lucide",
+                  "fill": "$cyan"
+                },
+                {
+                  "type": "text",
+                  "id": "20uKt",
+                  "fill": "$text-primary",
+                  "content": "Buttons don't respond when overlay is present",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "QaI2N",
+              "name": "res3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 16,
+              "padding": [
+                24,
+                28
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "QbWh2",
+                  "width": 32,
+                  "height": 32,
+                  "iconFontName": "shield-check",
+                  "iconFontFamily": "lucide",
+                  "fill": "$cyan"
+                },
+                {
+                  "type": "text",
+                  "id": "3Xv0J",
+                  "fill": "$text-primary",
+                  "content": "Warning banner alerts the user",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "y9PpL",
+              "name": "res4",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 16,
+              "padding": [
+                24,
+                28
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "b03VR",
+                  "width": 32,
+                  "height": 32,
+                  "iconFontName": "shield-check",
+                  "iconFontFamily": "lucide",
+                  "fill": "$cyan"
+                },
+                {
+                  "type": "text",
+                  "id": "dgnh4",
+                  "fill": "$cyan",
+                  "content": "User is protected",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "EsXTk",
+      "x": 5140,
+      "y": 2560,
+      "name": "Slide 11 - Trade-offs",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "hf606",
+          "fill": "$warn-amber",
+          "content": "TRADE-OFFS",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "ZwOhE",
+          "fill": "$text-primary",
+          "content": "Consider the Balance",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "wzRHE",
+          "name": "tradeList",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "iahWn",
+              "name": "t1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 20,
+              "padding": [
+                24,
+                28
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "k0WEZ",
+                  "width": 32,
+                  "height": 32,
+                  "iconFontName": "triangle-alert",
+                  "iconFontFamily": "lucide",
+                  "fill": "$warn-amber"
+                },
+                {
+                  "type": "text",
+                  "id": "a3lWR",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 1400,
+                  "content": "May impact UX — legitimate overlays (chat bubbles, accessibility) also blocked",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nQpVu",
+              "name": "t2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 20,
+              "padding": [
+                24,
+                28
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "51P4f",
+                  "width": 32,
+                  "height": 32,
+                  "iconFontName": "triangle-alert",
+                  "iconFontFamily": "lucide",
+                  "fill": "$warn-amber"
+                },
+                {
+                  "type": "text",
+                  "id": "ueH2E",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 1400,
+                  "content": "Requires careful placement — apply only to critical views, not the entire app",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "SeVO0",
+              "name": "t3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 10,
+              "gap": 20,
+              "padding": [
+                24,
+                28
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "pmG1W",
+                  "width": 32,
+                  "height": 32,
+                  "iconFontName": "triangle-alert",
+                  "iconFontFamily": "lucide",
+                  "fill": "$warn-amber"
+                },
+                {
+                  "type": "text",
+                  "id": "52Xxn",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 1400,
+                  "content": "Must be paired with clear UX messaging so users understand why input is blocked",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ybwfg",
+      "x": 7260,
+      "y": 2560,
+      "name": "Slide 12 - Recommendation",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": [
+        100,
+        160
+      ],
+      "justifyContent": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "ZnXpv",
+          "fill": "$cyan",
+          "content": "RECOMMENDATION",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "3PHh0",
+          "fill": "$text-primary",
+          "content": "Apply Protection To:",
+          "fontFamily": "Inter",
+          "fontSize": 52,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "8FgfJ",
+          "name": "recItems",
+          "width": "fill_container",
+          "gap": 32,
+          "children": [
+            {
+              "type": "frame",
+              "id": "yPn1I",
+              "name": "rc1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "hNJlC",
+                  "width": 48,
+                  "height": 48,
+                  "iconFontName": "log-in",
+                  "iconFontFamily": "lucide",
+                  "fill": "$cyan"
+                },
+                {
+                  "type": "text",
+                  "id": "JgzCy",
+                  "fill": "$text-primary",
+                  "content": "Login",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "W0pfH",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Email, password, and OAuth forms",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "mtXys",
+              "name": "rc2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "tufft",
+                  "width": 48,
+                  "height": 48,
+                  "iconFontName": "credit-card",
+                  "iconFontFamily": "lucide",
+                  "fill": "$warn-amber"
+                },
+                {
+                  "type": "text",
+                  "id": "nS5nx",
+                  "fill": "$text-primary",
+                  "content": "Payment",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "8YeyH",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Card details, billing, checkout flows",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xndrE",
+              "name": "rc3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 32,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "ovaY0",
+                  "width": 48,
+                  "height": 48,
+                  "iconFontName": "user",
+                  "iconFontFamily": "lucide",
+                  "fill": "$danger-red"
+                },
+                {
+                  "type": "text",
+                  "id": "W7xgx",
+                  "fill": "$text-primary",
+                  "content": "Personal Data",
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "4vA23",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "SSN, addresses, identity forms",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "3kKRK",
+      "x": 900,
+      "y": 3840,
+      "name": "Slide 13 - Final Message",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": 160,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "LRyAZ",
+          "width": 80,
+          "height": 4,
+          "fill": "$cyan",
+          "cornerRadius": 2
+        },
+        {
+          "type": "text",
+          "id": "fox24",
+          "fill": "$text-primary",
+          "content": "If your UI can be mimicked,",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "osdJh",
+          "fill": "$cyan",
+          "content": "your users can be tricked.",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "C2NIX",
+          "width": 80,
+          "height": 4,
+          "fill": "$cyan",
+          "cornerRadius": 2
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "B7TL7",
+      "x": 3020,
+      "y": 3840,
+      "name": "Slide 14 - Q&A",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 24,
+      "padding": 160,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "M3ZlE",
+          "fill": "$cyan",
+          "content": "Q&A",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 72,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "XQVLP",
+          "width": 120,
+          "height": 4,
+          "fill": "$cyan",
+          "cornerRadius": 2
+        },
+        {
+          "type": "text",
+          "id": "PPx53",
+          "fill": "$text-secondary",
+          "content": "Questions & Discussion",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 32
+        },
+        {
+          "type": "text",
+          "id": "3Wzte",
+          "fill": "$text-muted",
+          "content": "GHOSTTOUCH  ·  github.com/ghosttouch",
+          "textAlign": "center",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 16,
+          "letterSpacing": 2
+        }
+      ]
     }
-  ]
+  ],
+  "variables": {
+    "bg-navy": {
+      "type": "color",
+      "value": "#0A0F1C"
+    },
+    "card-slate": {
+      "type": "color",
+      "value": "#1E293B"
+    },
+    "cyan": {
+      "type": "color",
+      "value": "#22D3EE"
+    },
+    "danger-red": {
+      "type": "color",
+      "value": "#FF6B6B"
+    },
+    "inset": {
+      "type": "color",
+      "value": "#0F172A"
+    },
+    "terminal-black": {
+      "type": "color",
+      "value": "#040810"
+    },
+    "text-muted": {
+      "type": "color",
+      "value": "#64748B"
+    },
+    "text-primary": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "text-secondary": {
+      "type": "color",
+      "value": "#94A3B8"
+    },
+    "warn-amber": {
+      "type": "color",
+      "value": "#F59E0B"
+    }
+  }
 }

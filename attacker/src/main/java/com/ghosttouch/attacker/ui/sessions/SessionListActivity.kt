@@ -164,6 +164,7 @@ fun SessionCard(session: CaptureSession) {
                         when (session.overlayType) {
                             "payment" -> Icons.Default.CreditCard
                             "tapjacking" -> Icons.Default.TouchApp
+                            "capture_all" -> Icons.Default.Security
                             else -> Icons.AutoMirrored.Filled.Login
                         },
                         contentDescription = null,
