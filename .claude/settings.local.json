@@ -17,7 +17,14 @@
       "Bash(ANDROID_HOME=/Users/jackson.mafra/Library/Android/sdk ./gradlew assembleDebug)",
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(md5 /Users/jackson.mafra/Downloads/Projects/GhostTouch/design/GhostTouch)",
+      "Bash(md5)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\([c.get\\(''''name'''',''''?''''\\) for c in d.get\\(''''children'''',[]\\)]\\)\")",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\(''/Users/jackson.mafra/Downloads/Projects/GhostTouch/design/GhostTouch''\\)\\); print\\(len\\(d[''children'']\\), [c.get\\(''name'',''?''\\) for c in d[''children'']]\\)\")",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\(''/Users/jackson.mafra/Downloads/Projects/GhostTouch/design/GhostTouch''\\)\\); print\\(len\\(d[''children'']\\)\\)\")",
+      "Bash(users who enter data in the wrong place\" with Android/iOS/Both comparison:*)",
+      "Bash(git push:*)"
     ]
   }
 }

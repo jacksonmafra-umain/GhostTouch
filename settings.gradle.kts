@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GhostTouch"
+rootProject.name = "GhostTouch.pen"
 
 include(":common")
 include(":attacker")
