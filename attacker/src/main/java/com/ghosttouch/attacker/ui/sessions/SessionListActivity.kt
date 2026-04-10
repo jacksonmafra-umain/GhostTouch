@@ -227,12 +227,90 @@ fun SessionCard(session: CaptureSession) {
             DataRow("Email/User", session.email)
             DataRow("Password", session.password)
 
+            // Quick device summary (always visible)
+            if (session.deviceIntel.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(4.dp))
+                val deviceSummary = buildString {
+                    val model = session.deviceIntel["device.model"] ?: ""
+                    val os = session.deviceIntel["os.version"] ?: ""
+                    val net = when {
+                        session.deviceIntel["network.wifi"] == "true" -> "WiFi"
+                        session.deviceIntel["network.cellular"] == "true" -> "Cellular"
+                        else -> ""
+                    }
+                    val battery = session.deviceIntel["battery.level"] ?: ""
+                    listOf(model, "Android $os", net, battery)
+                        .filter { it.isNotBlank() }
+                        .joinTo(this, " · ")
+                }
+                Text(
+                    deviceSummary,
+                    fontSize = 10.sp,
+                    color = GhostColors.TextMuted,
+                    fontFamily = FontFamily.Monospace
+                )
+                Text(
+                    "${session.deviceIntel.size} intel fields captured",
+                    fontSize = 9.sp,
+                    color = GhostColors.CyanAccent.copy(alpha = 0.6f),
+                    fontFamily = FontFamily.Monospace
+                )
+            }
+
             // Expanded details
             AnimatedVisibility(visible = expanded) {
                 Column(modifier = Modifier.padding(top = 12.dp)) {
                     HorizontalDivider(color = GhostColors.TextMuted.copy(alpha = 0.2f))
                     Spacer(modifier = Modifier.height(12.dp))
 
+                    // ── Device Intel Section ──
+                    if (session.deviceIntel.isNotEmpty()) {
+                        Text(
+                            "DEVICE INTELLIGENCE (${session.deviceIntel.size} fields):",
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = GhostColors.CyanAccent,
+                            fontFamily = FontFamily.Monospace
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(GhostColors.TerminalBlack, RoundedCornerShape(4.dp))
+                                .padding(8.dp)
+                        ) {
+                            Column {
+                                var currentCat = ""
+                                for ((key, value) in session.deviceIntel) {
+                                    val cat = key.substringBefore(".")
+                                    if (cat != currentCat) {
+                                        currentCat = cat
+                                        if (currentCat.isNotEmpty()) {
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                        }
+                                        Text(
+                                            "[$currentCat]",
+                                            fontSize = 9.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = GhostColors.WarnAmber,
+                                            fontFamily = FontFamily.Monospace
+                                        )
+                                    }
+                                    val field = key.substringAfter(".")
+                                    Text(
+                                        "  %-24s %s".format(field, value),
+                                        fontSize = 8.sp,
+                                        color = GhostColors.CyanAccent.copy(alpha = 0.85f),
+                                        fontFamily = FontFamily.Monospace,
+                                        lineHeight = 13.sp
+                                    )
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    // ── Exfiltration Payload ──
                     if (session.encodedPayload.isNotEmpty()) {
                         Text(
                             "DISGUISED PAYLOAD (as analytics event):",
@@ -245,10 +323,7 @@ fun SessionCard(session: CaptureSession) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(
-                                    GhostColors.TerminalBlack,
-                                    RoundedCornerShape(4.dp)
-                                )
+                                .background(GhostColors.TerminalBlack, RoundedCornerShape(4.dp))
                                 .padding(8.dp)
                         ) {
                             Text(
@@ -263,7 +338,7 @@ fun SessionCard(session: CaptureSession) {
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            "DECODED (what attacker actually receives):",
+                            "DECODED (what attacker receives):",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
                             color = GhostColors.DangerRed,
@@ -273,10 +348,7 @@ fun SessionCard(session: CaptureSession) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(
-                                    GhostColors.TerminalBlack,
-                                    RoundedCornerShape(4.dp)
-                                )
+                                .background(GhostColors.TerminalBlack, RoundedCornerShape(4.dp))
                                 .padding(8.dp)
                         ) {
                             Text(

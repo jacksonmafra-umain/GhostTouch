@@ -4,17 +4,19 @@ package com.ghosttouch.common.model
  * Represents a single captured input session from an overlay attack.
  *
  * Each session records the data captured when a user interacts with a fake overlay
- * that was displayed over a target application. This model is used for educational
- * demonstration purposes only.
+ * that was displayed over a target application, plus device intelligence gathered
+ * at capture time. This model is used for educational demonstration purposes only.
  *
  * @property id Unique identifier for this session (epoch millis at capture time).
- * @property targetApp Package name of the app that was being overlaid (e.g., "com.wcdonalds.app").
+ * @property targetApp Package name of the app that was being overlaid.
  * @property email The email/username value captured from the fake login form.
  * @property password The password value captured from the fake login form.
+ * @property cardNumber The card number captured from the fake payment form.
  * @property timestamp ISO 8601 formatted timestamp of when the capture occurred.
- * @property overlayType The type of overlay that was used (e.g., "login", "payment", "tapjacking").
+ * @property overlayType The type of overlay used ("login", "payment", "capture_all", "tapjacking").
  * @property encodedPayload The Base64-encoded exfiltration payload, if generated.
  * @property exfilStatus Status of the simulated exfiltration ("pending", "sent", "failed").
+ * @property deviceIntel Map of device intelligence fields collected at capture time.
  */
 data class CaptureSession(
     val id: Long = System.currentTimeMillis(),
@@ -25,5 +27,6 @@ data class CaptureSession(
     val timestamp: String,
     val overlayType: String = "login",
     val encodedPayload: String = "",
-    val exfilStatus: String = "pending"
+    val exfilStatus: String = "pending",
+    val deviceIntel: Map<String, String> = emptyMap()
 )

