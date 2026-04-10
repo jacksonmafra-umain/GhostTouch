@@ -260,8 +260,8 @@
               "fill": "$card-slate",
               "cornerRadius": 12,
               "layout": "vertical",
-              "gap": 16,
-              "padding": 32,
+              "gap": 12,
+              "padding": 24,
               "children": [
                 {
                   "type": "text",
@@ -269,7 +269,7 @@
                   "fill": "$cyan",
                   "content": "01",
                   "fontFamily": "JetBrains Mono",
-                  "fontSize": 48,
+                  "fontSize": 36,
                   "fontWeight": "700"
                 },
                 {
@@ -287,10 +287,10 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Malicious app runs as a foreground service, disguised as a game",
+                  "content": "Disguised as a tap game, runs in background",
                   "lineHeight": 1.4,
                   "fontFamily": "Inter",
-                  "fontSize": 20
+                  "fontSize": 16
                 }
               ]
             },
@@ -302,25 +302,25 @@
               "fill": "$card-slate",
               "cornerRadius": 12,
               "layout": "vertical",
-              "gap": 16,
-              "padding": 32,
+              "gap": 12,
+              "padding": 24,
               "children": [
                 {
                   "type": "text",
                   "id": "Vq4U8",
-                  "fill": "$warn-amber",
+                  "fill": "$cyan",
                   "content": "02",
                   "fontFamily": "JetBrains Mono",
-                  "fontSize": 48,
+                  "fontSize": 36,
                   "fontWeight": "700"
                 },
                 {
                   "type": "text",
                   "id": "eo15Y",
                   "fill": "$text-primary",
-                  "content": "Detect",
+                  "content": "Harvest",
                   "fontFamily": "Inter",
-                  "fontSize": 24,
+                  "fontSize": 20,
                   "fontWeight": "600"
                 },
                 {
@@ -329,10 +329,10 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Polls UsageStatsManager to detect when target app is in foreground",
+                  "content": "Game requests permissions: location, contacts, phone",
                   "lineHeight": 1.4,
                   "fontFamily": "Inter",
-                  "fontSize": 20
+                  "fontSize": 16
                 }
               ]
             },
@@ -344,8 +344,8 @@
               "fill": "$card-slate",
               "cornerRadius": 12,
               "layout": "vertical",
-              "gap": 16,
-              "padding": 32,
+              "gap": 12,
+              "padding": 24,
               "children": [
                 {
                   "type": "text",
@@ -353,16 +353,16 @@
                   "fill": "$danger-red",
                   "content": "03",
                   "fontFamily": "JetBrains Mono",
-                  "fontSize": 48,
+                  "fontSize": 36,
                   "fontWeight": "700"
                 },
                 {
                   "type": "text",
                   "id": "8tIeE",
                   "fill": "$text-primary",
-                  "content": "Overlay",
+                  "content": "Detect",
                   "fontFamily": "Inter",
-                  "fontSize": 24,
+                  "fontSize": 20,
                   "fontWeight": "600"
                 },
                 {
@@ -371,10 +371,10 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Displays pixel-perfect fake UI on top of the real app",
+                  "content": "Polls UsageStatsManager to find target app",
                   "lineHeight": 1.4,
                   "fontFamily": "Inter",
-                  "fontSize": 20
+                  "fontSize": 16
                 }
               ]
             },
@@ -386,8 +386,8 @@
               "fill": "$card-slate",
               "cornerRadius": 12,
               "layout": "vertical",
-              "gap": 16,
-              "padding": 32,
+              "gap": 12,
+              "padding": 24,
               "children": [
                 {
                   "type": "text",
@@ -395,16 +395,16 @@
                   "fill": "#FF6B6B",
                   "content": "04",
                   "fontFamily": "JetBrains Mono",
-                  "fontSize": 48,
+                  "fontSize": 36,
                   "fontWeight": "700"
                 },
                 {
                   "type": "text",
                   "id": "aNzF4",
                   "fill": "$text-primary",
-                  "content": "Capture",
+                  "content": "Overlay",
                   "fontFamily": "Inter",
-                  "fontSize": 24,
+                  "fontSize": 20,
                   "fontWeight": "600"
                 },
                 {
@@ -413,10 +413,52 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "User input goes to fake fields — credentials exfiltrated",
+                  "content": "Pixel-perfect fake UI captures all input",
                   "lineHeight": 1.4,
                   "fontFamily": "Inter",
-                  "fontSize": 20
+                  "fontSize": 16
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "FJRp4",
+              "name": "c5",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "aZQG5",
+                  "fill": "#FF6B6B",
+                  "content": "05",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 36,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "hsIfU",
+                  "fill": "$text-primary",
+                  "content": "Exfiltrate",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "nEJBz",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Base64-encode + disguise as analytics telemetry",
+                  "lineHeight": 1.4,
+                  "fontFamily": "Inter",
+                  "fontSize": 16
                 }
               ]
             }
@@ -578,7 +620,7 @@
                   "type": "text",
                   "id": "JXzBR",
                   "fill": "$text-primary",
-                  "content": "Open GhostTouch app — play the tap game",
+                  "content": "Open GhostTouch — play tap game, grant game features",
                   "fontFamily": "Inter",
                   "fontSize": 26
                 }
@@ -610,7 +652,7 @@
                   "type": "text",
                   "id": "7iv4E",
                   "fill": "$text-primary",
-                  "content": "Grant overlay + usage stats permissions",
+                  "content": "Grant overlay + usage stats in Control panel",
                   "fontFamily": "Inter",
                   "fontSize": 26
                 }
@@ -642,7 +684,7 @@
                   "type": "text",
                   "id": "CZCw0",
                   "fill": "$text-primary",
-                  "content": "Start overlay service, switch to WcDonald's",
+                  "content": "Select 'Capture All' mode, start overlay service",
                   "fontFamily": "Inter",
                   "fontSize": 26
                 }
@@ -674,7 +716,7 @@
                   "type": "text",
                   "id": "FgOoV",
                   "fill": "$warn-amber",
-                  "content": "Fake login overlay appears — enter credentials",
+                  "content": "Open WcDonald's — fake verification overlay appears",
                   "fontFamily": "Inter",
                   "fontSize": 26,
                   "fontWeight": "600"
@@ -707,7 +749,7 @@
                   "type": "text",
                   "id": "xu6eY",
                   "fill": "$danger-red",
-                  "content": "Return to GhostTouch — view captured session",
+                  "content": "View session: credentials + device intel + contacts + GPS",
                   "fontFamily": "Inter",
                   "fontSize": 26,
                   "fontWeight": "600"
@@ -2061,8 +2103,8 @@
       "type": "frame",
       "id": "3kKRK",
       "x": 900,
-      "y": 3840,
-      "name": "Slide 13 - Final Message",
+      "y": 6400,
+      "name": "Slide 16 - Final Message",
       "width": 1920,
       "height": 1080,
       "fill": "$bg-navy",
@@ -2114,8 +2156,8 @@
       "type": "frame",
       "id": "B7TL7",
       "x": 3020,
-      "y": 3840,
-      "name": "Slide 14 - Q&A",
+      "y": 6400,
+      "name": "Slide 17 - Q&A",
       "width": 1920,
       "height": 1080,
       "fill": "$bg-navy",
@@ -2161,6 +2203,1545 @@
           "fontFamily": "JetBrains Mono",
           "fontSize": 16,
           "letterSpacing": 2
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "pMvvg",
+      "x": 900,
+      "y": 3840,
+      "name": "Slide 13 - Permission Trick",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "Mqi54",
+          "fill": "$danger-red",
+          "content": "THE PERMISSION TRICK",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "gWxaP",
+          "fill": "$text-primary",
+          "content": "It's Just a Game... Right?",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "DEnaX",
+          "name": "tbl",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "frame",
+              "id": "ChEpa",
+              "name": "hdr",
+              "width": "fill_container",
+              "fill": "$inset",
+              "cornerRadius": [
+                8,
+                8,
+                0,
+                0
+              ],
+              "padding": [
+                12,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "5hSCd",
+                  "fill": "$cyan",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "User Sees...",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 13,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "eyQ8v",
+                  "fill": "$warn-amber",
+                  "textGrowth": "fixed-width",
+                  "width": 380,
+                  "content": "They Grant...",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 13,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "dYAqa",
+                  "fill": "$danger-red",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "We Actually Get...",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 13,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kzQUO",
+              "name": "r1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "padding": [
+                10,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "2R3hq",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Leaderboards",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "fJrjw",
+                  "fill": "$warn-amber",
+                  "textGrowth": "fixed-width",
+                  "width": 380,
+                  "content": "INTERNET",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "RjLHj",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Data exfiltration + local IP",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pBNQ1",
+              "name": "r2",
+              "width": "fill_container",
+              "fill": "$inset",
+              "padding": [
+                10,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "m2Ivs",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Nearby Players",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "UCr18",
+                  "fill": "$warn-amber",
+                  "textGrowth": "fixed-width",
+                  "width": 380,
+                  "content": "FINE_LOCATION + WIFI_STATE",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "n0mRP",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "GPS coords, address, WiFi SSID/BSSID",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "dfh8N",
+              "name": "r3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "padding": [
+                10,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "F65vi",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Share Scores",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "3XqeZ",
+                  "fill": "$warn-amber",
+                  "textGrowth": "fixed-width",
+                  "width": 380,
+                  "content": "READ_CONTACTS",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "nM6fk",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Full contacts: names + phones",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "McsMA",
+              "name": "r4",
+              "width": "fill_container",
+              "fill": "$inset",
+              "padding": [
+                10,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "omZ5S",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Do Not Disturb",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "vMWFk",
+                  "fill": "$warn-amber",
+                  "textGrowth": "fixed-width",
+                  "width": 380,
+                  "content": "READ_PHONE_STATE",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "keMDH",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Carrier, SIM, network type, phone number",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "5mYfa",
+              "name": "r5",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "padding": [
+                10,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "znq3Z",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Game Replays",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "yCC6T",
+                  "fill": "$warn-amber",
+                  "textGrowth": "fixed-width",
+                  "width": 380,
+                  "content": "READ_MEDIA_IMAGES",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "MyFkm",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Photo & file scan",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Ij30M",
+              "name": "r6",
+              "width": "fill_container",
+              "fill": "$inset",
+              "cornerRadius": [
+                0,
+                0,
+                8,
+                8
+              ],
+              "padding": [
+                10,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zo7BU",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Daily Rewards",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "Rj9td",
+                  "fill": "$warn-amber",
+                  "textGrowth": "fixed-width",
+                  "width": 380,
+                  "content": "BOOT_COMPLETED",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "AqCEx",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Auto-start after reboot (persistence)",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "127Ux",
+      "x": 3020,
+      "y": 3840,
+      "name": "Slide 14 - Data Harvested",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 28,
+      "padding": [
+        80,
+        100
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "CuZD1",
+          "fill": "$danger-red",
+          "content": "DATA HARVESTED",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "qJ7K9",
+          "fill": "$text-primary",
+          "content": "50+ Fields — Zero Exploits",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "KiWii",
+          "name": "grid",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "gAj2K",
+              "name": "colL",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "3uVhH",
+                  "name": "i1",
+                  "width": "fill_container",
+                  "fill": "$card-slate",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    14,
+                    18
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "7aiAu",
+                      "fill": "$cyan",
+                      "content": "DEVICE",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "yVuez",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Manufacturer, model, brand, fingerprint, ABIs, board",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "At7FF",
+                  "name": "i2",
+                  "width": "fill_container",
+                  "fill": "$card-slate",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    14,
+                    18
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pDAgB",
+                      "fill": "$danger-red",
+                      "content": "LOCATION",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "rObRL",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "GPS lat/long, accuracy, altitude, full address, city, country, postal code",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "EUWBt",
+                  "name": "i3",
+                  "width": "fill_container",
+                  "fill": "$card-slate",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    14,
+                    18
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "9QnwA",
+                      "fill": "$warn-amber",
+                      "content": "WIFI / NETWORK",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "9B94W",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "SSID, BSSID, IP address, gateway, DNS, subnet, signal, bandwidth, VPN status",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "r0jal",
+                  "name": "i4",
+                  "width": "fill_container",
+                  "fill": "$card-slate",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    14,
+                    18
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "9BtBD",
+                      "fill": "$danger-red",
+                      "content": "CONTACTS",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "P7sit",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Total count + sample names & phone numbers from address book",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "2JaAN",
+              "name": "colR",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "IQDIy",
+                  "name": "i5",
+                  "width": "fill_container",
+                  "fill": "$card-slate",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    14,
+                    18
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QMgw9",
+                      "fill": "$warn-amber",
+                      "content": "CARRIER / SIM",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "2vQYz",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Carrier name, SIM operator, network type (5G/LTE), phone number, country",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "c54Ve",
+                  "name": "i6",
+                  "width": "fill_container",
+                  "fill": "$card-slate",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    14,
+                    18
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "JTxQa",
+                      "fill": "$cyan",
+                      "content": "INSTALLED APPS",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "yiEvh",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Total count + flagged banking, crypto, social, 2FA and email apps",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "pAv8g",
+                  "name": "i7",
+                  "width": "fill_container",
+                  "fill": "$card-slate",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    14,
+                    18
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "7OKNp",
+                      "fill": "$cyan",
+                      "content": "OS / SETTINGS",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "MD7bN",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Android version, SDK, security patch, Android ID, ADB, developer mode, accessibility",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sM9OS",
+                  "name": "i8",
+                  "width": "fill_container",
+                  "fill": "$card-slate",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    14,
+                    18
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ZfwSX",
+                      "fill": "$text-muted",
+                      "content": "HARDWARE",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "1T1xH",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "RAM, storage, battery, display size/density, screen resolution",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "DrdpZ",
+          "fill": "$warn-amber",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "All collected without any system exploit — just approved permissions.",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 18,
+          "fontWeight": "500"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "W1oQd",
+      "x": 5140,
+      "y": 3840,
+      "name": "Slide 15 - Capture All Mode",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "xoMiO",
+          "fill": "$warn-amber",
+          "content": "CAPTURE ALL MODE",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "md1vz",
+          "fill": "$text-primary",
+          "content": "One Overlay, Everything Stolen",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "KpngC",
+          "fill": "$text-secondary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "A fake \"Account Verification\" screen harvests all data at once:",
+          "fontFamily": "Inter",
+          "fontSize": 22,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "tf8Zn",
+          "name": "cols",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "g3PIV",
+              "name": "s1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "J4phw",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "log-in",
+                  "iconFontFamily": "lucide",
+                  "fill": "$cyan"
+                },
+                {
+                  "type": "text",
+                  "id": "g9WeU",
+                  "fill": "$text-primary",
+                  "content": "Sign-in Details",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "ctajI",
+                  "fill": "$cyan",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Email\nPassword",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kkHoO",
+              "name": "s2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "7pgaf",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "user",
+                  "iconFontFamily": "lucide",
+                  "fill": "$warn-amber"
+                },
+                {
+                  "type": "text",
+                  "id": "8Vylh",
+                  "fill": "$text-primary",
+                  "content": "Personal Info",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "vEDIR",
+                  "fill": "$warn-amber",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Full Name\nPhone Number",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "DVFsR",
+              "name": "s3",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "j22M5",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "credit-card",
+                  "iconFontFamily": "lucide",
+                  "fill": "$danger-red"
+                },
+                {
+                  "type": "text",
+                  "id": "9GxBc",
+                  "fill": "$text-primary",
+                  "content": "Payment Data",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "2yGS2",
+                  "fill": "$danger-red",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Card Number\nExpiry + CVV",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "XeX9t",
+          "name": "note",
+          "width": "fill_container",
+          "fill": "$inset",
+          "cornerRadius": 8,
+          "gap": 12,
+          "padding": [
+            14,
+            20
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "iManE",
+              "width": 20,
+              "height": 20,
+              "iconFontName": "info",
+              "iconFontFamily": "lucide",
+              "fill": "$cyan"
+            },
+            {
+              "type": "text",
+              "id": "nU14U",
+              "fill": "$text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Even the \"Skip\" button captures whatever was partially entered. No escape.",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "UUgtF",
+      "x": 7260,
+      "y": 3840,
+      "name": "Slide 15b - Red Border Demo",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": [
+        100,
+        160
+      ],
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "Cz3bl",
+          "fill": "$cyan",
+          "content": "DEMO INDICATOR",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "pbw1T",
+          "fill": "$text-primary",
+          "content": "Spot the Overlay",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "dAxZO",
+          "name": "demo",
+          "width": "fill_container",
+          "gap": 40,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "uyxQl",
+              "name": "real",
+              "width": 360,
+              "height": 500,
+              "fill": "#FAFAFA",
+              "cornerRadius": 16,
+              "layout": "vertical",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MyDqH",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "#DA291C",
+                  "cornerRadius": [
+                    16,
+                    16,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "eZN6a",
+                  "fill": "#1A1A1A",
+                  "content": "Real App",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "WFh8s",
+                  "fill": "#757575",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "No border\nUser sees this normally",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wC76Q",
+              "name": "fake",
+              "width": 360,
+              "height": 500,
+              "fill": "#FAFAFA",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "outside",
+                "thickness": 4,
+                "fill": "#FF0000"
+              },
+              "layout": "vertical",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "0uJAG",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "#DA291C",
+                  "cornerRadius": [
+                    16,
+                    16,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "V22uq",
+                  "fill": "#1A1A1A",
+                  "content": "Overlay (Attack)",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "VGA6Y",
+                  "fill": "#757575",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Red border = overlay\nOnly visible in demo mode",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "CM1FZ",
+          "fill": "$warn-amber",
+          "textGrowth": "fixed-width",
+          "width": 1200,
+          "content": "In a real attack, the overlay has NO border — it's pixel-perfect identical.",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "500"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "157Fw",
+      "x": 900,
+      "y": 5120,
+      "name": "Slide 16b - Updated Recommendation",
+      "width": 1920,
+      "height": 1080,
+      "fill": "$bg-navy",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": [
+        100,
+        120
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "cGDpV",
+          "fill": "$cyan",
+          "content": "FULL DEFENSE CHECKLIST",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "letterSpacing": 6
+        },
+        {
+          "type": "text",
+          "id": "gginl",
+          "fill": "$text-primary",
+          "content": "Protect Your Users",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "AUFQn",
+          "name": "list",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "i79cb",
+              "name": "c1",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "G0hSB",
+                  "fill": "$cyan",
+                  "content": "FOR DEVELOPERS",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "700",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "oiG7J",
+                  "width": 40,
+                  "height": 3,
+                  "fill": "$cyan",
+                  "cornerRadius": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "GVrwm",
+                  "name": "d1",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "5Lf2P",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$cyan"
+                    },
+                    {
+                      "type": "text",
+                      "id": "NTUBW",
+                      "fill": "$text-primary",
+                      "content": "filterTouchesWhenObscured on all forms",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Ia3kD",
+                  "name": "d2",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "8BHO3",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$cyan"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Bze0p",
+                      "fill": "$text-primary",
+                      "content": "FLAG_SECURE on sensitive screens",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Rzco4",
+                  "name": "d3",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "Wt8Oy",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$cyan"
+                    },
+                    {
+                      "type": "text",
+                      "id": "I1emC",
+                      "fill": "$text-primary",
+                      "content": "Biometric gate before payments",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cMF72",
+                  "name": "d4",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "Mtdvh",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$cyan"
+                    },
+                    {
+                      "type": "text",
+                      "id": "F4K6V",
+                      "fill": "$text-primary",
+                      "content": "Overlay detection + user warning",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NnfXf",
+                  "name": "d5",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "ogcNA",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$cyan"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hPrRP",
+                      "fill": "$text-primary",
+                      "content": "Focus change monitoring",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gvvAZ",
+              "name": "c2",
+              "width": "fill_container",
+              "fill": "$card-slate",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "HYyrG",
+                  "fill": "$warn-amber",
+                  "content": "FOR USERS",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "700",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "hAei6",
+                  "width": 40,
+                  "height": 3,
+                  "fill": "$warn-amber",
+                  "cornerRadius": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "leT6V",
+                  "name": "u1",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "kv35f",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$warn-amber"
+                    },
+                    {
+                      "type": "text",
+                      "id": "NjQZr",
+                      "fill": "$text-primary",
+                      "content": "Question why games need location",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "UXkpJ",
+                  "name": "u2",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "42ghz",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$warn-amber"
+                    },
+                    {
+                      "type": "text",
+                      "id": "0QUTC",
+                      "fill": "$text-primary",
+                      "content": "Revoke unused permissions regularly",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "OFq2W",
+                  "name": "u3",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "VzQmP",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$warn-amber"
+                    },
+                    {
+                      "type": "text",
+                      "id": "NUO2v",
+                      "fill": "$text-primary",
+                      "content": "Disable 'Display over apps' for unknowns",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "7LZKK",
+                  "name": "u4",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "mGctk",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$warn-amber"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nJ31w",
+                      "fill": "$text-primary",
+                      "content": "Install apps only from trusted sources",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "TcJJz",
+                  "name": "u5",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "N8Fmo",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$warn-amber"
+                    },
+                    {
+                      "type": "text",
+                      "id": "C4XkG",
+                      "fill": "$text-primary",
+                      "content": "Watch for unexpected login prompts",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
